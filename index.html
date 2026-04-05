@@ -827,7 +827,7 @@
     </h1>
 
     <p class="hero-sub">
-      <strong>build something real.</strong> ship it. get paid.
+      <strong>build something real.</strong> get 5 real users. ship it.
     </p>
 
     <a href="#apply" class="btn-cta">ship it</a>
@@ -853,6 +853,21 @@
     </div>
   </section>
 
+  <!-- ── FOUNDER BIO ── -->
+  <section class="section" style="border-top: 1px solid #1e1d1b;">
+    <div class="section-label">who made this</div>
+    <div style="display: grid; grid-template-columns: auto 1fr; gap: 40px; align-items: start; max-width: 860px;">
+      <div style="width: 72px; height: 72px; background: var(--card-bg); border: 1px solid var(--card-border); display: flex; align-items: center; justify-content: center; font-size: 32px; flex-shrink: 0;">👋</div>
+      <div>
+        <div style="font-family: 'Alfa Slab One', serif; font-size: 22px; color: var(--white); margin-bottom: 12px;">I'm Johnny.</div>
+        <p style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--muted); line-height: 1.9; max-width: 640px;">
+          I'm 18, from Headford in the west of Ireland. I've founded 3 companies, built websites for local GAA clubs, and competed at BTYSTE with a computer vision project analysing referee bias across 400 matches.<br/><br/>
+          I built Bootstrap because I think <strong style="color: var(--white);">the best way to learn how to start a company is to just start one.</strong> Not read about it. Not watch a YouTube video about it. Build something, put it in front of a real person, and see what happens.
+        </p>
+      </div>
+    </div>
+  </section>
+
   <!-- ── TERMINAL DECORATION ── -->
   <div class="terminal-line">
     <span class="prompt">$ </span><span class="cmd">git init bootstrap &amp;&amp; npm run dev &amp;&amp; git push origin main # ship it before you're ready</span>
@@ -861,24 +876,31 @@
   <!-- ── HOW IT WORKS ── -->
   <section class="section">
     <div class="section-label">How it works</div>
-    <div class="steps">
+    <p style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--muted); margin-bottom: 40px; margin-top: -24px;">it's not complicated. most people just never start.</p>
+    <div class="steps" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
       <div class="step">
         <span class="step-icon">🔨</span>
         <h3>01 — Build</h3>
-        <p>Ship a <strong>real product</strong>. SaaS, hardware, game, CLI tool, Chrome extension — anything with a live URL and <strong>open source code</strong>. No mockups. No presentations. Working software only.</p>
+        <p>A <strong>real product</strong>. SaaS, hardware, game, CLI, Chrome extension — doesn't matter. It needs a <strong>live URL</strong> and an <strong>open source repo</strong>. No mockups. No "coming soon". Working software only.</p>
         <div class="step-num">01</div>
       </div>
       <div class="step">
-        <span class="step-icon">🚀</span>
-        <h3>02 — Ship</h3>
-        <p>Deploy it. Post a <strong>live link</strong>. Open source the code. Then record a <strong>2-minute pitch</strong> — just you, your screen, and your idea. No pitch decks required.</p>
+        <span class="step-icon">🧑</span>
+        <h3>02 — Get 5 real users</h3>
+        <p>Not you. Not your mum. <strong>5 real people</strong> who actually used it. Proof = a public analytics dashboard (Plausible, Umami, etc.) showing <strong>5+ unique visitors</strong> + at least one screenshot of real engagement — a message, sign-up email, or review.</p>
         <div class="step-num">02</div>
       </div>
       <div class="step">
-        <span class="step-icon">📦</span>
-        <h3>03 — Get Prizes</h3>
-        <p>We review every submission. Ship something real and <strong>we ship something back</strong>. Hardware, credits, and the satisfaction of having built something that actually exists.</p>
+        <span class="step-icon">🎤</span>
+        <h3>03 — Pitch it</h3>
+        <p>Record a <strong>2-minute video</strong>. Show the product working. Explain who it's for. Explain how it makes money. You don't need to be a good presenter. You just need to not be boring.</p>
         <div class="step-num">03</div>
+      </div>
+      <div class="step">
+        <span class="step-icon">📦</span>
+        <h3>04 — Ship it</h3>
+        <p>Submit via the Bootstrap site. We score it, post it to the <strong>leaderboard</strong>, and ship prizes <strong>within a week</strong>. You ship, we ship. If it's real, you get prizes. If it's slop, you don't. Pretty simple.</p>
+        <div class="step-num">04</div>
       </div>
     </div>
   </section>
@@ -896,15 +918,15 @@
       </div>
       <div class="score-item">
         <div class="score-item-left">
-          <div class="score-criterion">Real User (not you)</div>
-          <div class="score-desc">someone else actually used it</div>
+          <div class="score-criterion">Real Users (not you)</div>
+          <div class="score-desc">public analytics (5+ uniques) + screenshot of real engagement</div>
         </div>
         <div class="score-pts">25 <span>pts</span></div>
       </div>
       <div class="score-item">
         <div class="score-item-left">
           <div class="score-criterion">2-Min Pitch Quality</div>
-          <div class="score-desc">screen recording, your voice, your product</div>
+          <div class="score-desc">problem, solution, who it's for — and how it makes money</div>
         </div>
         <div class="score-pts">25 <span>pts</span></div>
       </div>
@@ -919,7 +941,7 @@
     <div class="score-item" style="border: 1px solid var(--card-border); background: var(--card-bg); padding: 24px 28px; display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 2px;">
       <div class="score-item-left">
         <div class="score-criterion">Hackatime Hours</div>
-        <div class="score-desc">tracked coding time via Hackatime / WakaTime</div>
+        <div class="score-desc">Hackatime (coding) or Lapse (hardware/design) — both work</div>
       </div>
       <div class="score-pts">10 <span>pts</span></div>
     </div>
@@ -937,9 +959,9 @@
       <div class="prize-tier gold">
         <div class="prize-stage">Tier 1</div>
         <div class="prize-tier-name">🥇 Funded</div>
-        <div class="prize-range"><strong>85–100 pts</strong> — you built a real company, basically</div>
+        <div class="prize-range"><strong>85–100 pts</strong> — you basically built a real company</div>
         <ul class="prize-items">
-          <li>$50 Stripe credit</li>
+          <li>$25 Stripe credit</li>
           <li>Porkbun domain voucher (1 year)</li>
           <li>Railway hosting credit</li>
         </ul>
@@ -950,7 +972,7 @@
         <div class="prize-tier-name">🥈 Series A</div>
         <div class="prize-range"><strong>70–84 pts</strong> — solid ship, real traction</div>
         <ul class="prize-items">
-          <li>$25 Railway or Vercel credit</li>
+          <li>$25 Vercel credit</li>
           <li>Porkbun domain voucher (1 year)</li>
         </ul>
       </div>
@@ -967,7 +989,7 @@
       <div class="prize-tier base">
         <div class="prize-stage">Tier 4</div>
         <div class="prize-tier-name" style="color: var(--green);">✓ Bootstrapped</div>
-        <div class="prize-range"><strong>Shipped anything</strong> — you showed up. that counts.</div>
+        <div class="prize-range"><strong>Shipped anything</strong> — you showed up. that's not nothing.</div>
         <ul class="prize-items">
           <li>Hack Club sticker pack</li>
           <li>Listed in the Bootstrap Hall of Fame</li>
@@ -1014,10 +1036,10 @@
     <div style="max-width: 600px; margin: 0 auto;">
       <div class="hero-eyebrow" style="justify-content: center;">Applications Open · Rolling Basis</div>
       <h2 style="font-family: 'Alfa Slab One', serif; font-size: clamp(40px, 6vw, 72px); font-weight: 400; line-height: 1.05; margin-bottom: 20px;">
-        Stop planning.<br/><span style="color: var(--amber);">Start shipping.</span>
+        Stop reading this.<br/><span style="color: var(--amber);">Go build something.</span>
       </h2>
       <p style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 40px;">
-        You don't need a team. You don't need funding. You need an idea, a laptop, and the willingness to put something real into the world.
+        You don't need a team. You don't need funding. You don't need to be ready.<br/>You just need to start.
       </p>
       <a href="https://hackclub.com" class="btn-cta" style="font-size: 18px; padding: 20px 52px;">ship it</a>
       <p style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #2a2825; margin-top: 20px;">
@@ -1032,6 +1054,11 @@
       <strong>Bootstrap</strong>
       A Hack Club You Ship, We Ship program.<br/>
       Built for teenagers who build real things.
+    </div>
+    <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #3d3a36; text-align: center; line-height: 1.8;">
+      estimated 6–10 hrs per project · ~$5/hr prize budget<br/>
+      all prizes digital and instant to deliver<br/>
+      <span style="color: #2a2825;">track time with</span> <span style="color: var(--amber);">Hackatime</span> <span style="color: #2a2825;">or</span> <span style="color: var(--amber);">Lapse</span>
     </div>
     <div class="footer-right">
       <div style="margin-bottom: 8px;"><span class="status-dot"></span>accepting submissions</div>
@@ -1057,8 +1084,8 @@
       'built by teenagers',
       'runway: infinite',
       '100 pts max · you got this',
-      'real user = 25 pts',
-      'hackatime or it didn\'t happen',
+      '5 real users = 25 pts',
+      'hackatime or lapse · idfk, just track your time',
       '$50 stripe credit awaits',
       'ship → get paid',
       'no pitch decks · just working software',
