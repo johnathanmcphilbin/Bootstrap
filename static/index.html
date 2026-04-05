@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bootstrap — Hack Club YSWS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=JetBrains+Mono:wght@400;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f0e0d;
+      --green: #00c805;
+      --amber: #f5a623;
+      --white: #f0ede8;
+      --muted: #6b6560;
+      --card-bg: #1a1916;
+      --card-border: #2a2825;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--white);
+      font-family: 'Space Grotesk', sans-serif;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Grain texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.35;
+    }
+
+    /* ── TICKER ─────────────────────────────── */
+    .ticker {
+      background: #0a0a09;
+      border-bottom: 1px solid #1e1d1b;
+      padding: 8px 0;
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
+    }
+
+    .ticker-inner {
+      display: inline-flex;
+      gap: 0;
+      animation: ticker-scroll 28s linear infinite;
+    }
+
+    .ticker-item {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--green);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0 32px;
+    }
+
+    .ticker-item::after {
+      content: '◆';
+      margin-left: 32px;
+      opacity: 0.4;
+    }
+
+    @keyframes ticker-scroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ── NAV ─────────────────────────────────── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 48px;
+      border-bottom: 1px solid #1e1d1b;
+      position: relative;
+      z-index: 10;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .hack-flag {
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+    }
+
+    .nav-wordmark {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      line-height: 1.3;
+    }
+
+    .nav-wordmark span {
+      display: block;
+      font-size: 10px;
+      color: #3d3a36;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .btn-nav {
+      background: var(--amber);
+      color: #0f0e0d;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 10px 24px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.15s, transform 0.1s;
+      clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+    }
+
+    .btn-nav:hover {
+      background: #ffc24a;
+      transform: translateY(-1px);
+    }
+
+    /* ── HERO ─────────────────────────────────── */
+    .hero {
+      padding: 80px 48px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Background grid lines */
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(245,166,35,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(245,166,35,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--amber);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 1px;
+      background: var(--amber);
+    }
+
+    .hero-title {
+      font-family: 'Alfa Slab One', serif;
+      font-size: clamp(72px, 12vw, 140px);
+      font-weight: 400;
+      line-height: 0.92;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      position: relative;
+      z-index: 1;
+      text-shadow: 4px 4px 0px rgba(245,166,35,0.15);
+    }
+
+    .hero-title .highlight {
+      color: var(--amber);
+      display: block;
+    }
+
+    .hero-sub {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(15px, 2vw, 20px);
+      color: var(--muted);
+      margin-top: 24px;
+      margin-bottom: 40px;
+      letter-spacing: 0.02em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-sub strong {
+      color: var(--white);
+      font-weight: 600;
+    }
+
+    .btn-cta {
+      background: var(--amber);
+      color: #0f0e0d;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 16px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 16px 40px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      position: relative;
+      z-index: 1;
+      transition: all 0.15s;
+      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    }
+
+    .btn-cta::after {
+      content: ' →';
+    }
+
+    .btn-cta:hover {
+      background: #ffc24a;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(245,166,35,0.3);
+    }
+
+    /* ── METRIC CARDS ─────────────────────────── */
+    .metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 64px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .metric-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 20px 28px;
+      min-width: 180px;
+      position: relative;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s, transform 0.5s, border-color 0.2s;
+    }
+
+    .metric-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--amber);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s 0.2s;
+    }
+
+    .metric-card.visible { opacity: 1; transform: translateY(0); }
+    .metric-card.visible::before { transform: scaleX(1); }
+    .metric-card:hover { border-color: #3a3733; }
+
+    .metric-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-bottom: 8px;
+    }
+
+    .metric-value {
+      font-family: 'Alfa Slab One', serif;
+      font-size: 28px;
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .metric-value.green { color: var(--green); }
+    .metric-value.amber { color: var(--amber); }
+
+    /* Gear icon */
+    .gear-wrap {
+      position: absolute;
+      right: 48px;
+      top: 80px;
+      opacity: 0.06;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .gear-wrap svg {
+      animation: spin 20s linear infinite;
+      width: 280px;
+      height: 280px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── HOW IT WORKS ──────────────────────────── */
+    .section {
+      padding: 80px 48px;
+      border-top: 1px solid #1e1d1b;
+    }
+
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      margin-bottom: 48px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #1e1d1b;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2px;
+    }
+
+    .step {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 40px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .step-num {
+      font-family: 'Alfa Slab One', serif;
+      font-size: 72px;
+      color: #1e1d1b;
+      line-height: 1;
+      position: absolute;
+      bottom: 16px;
+      right: 24px;
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
+    }
+
+    .step-icon {
+      font-size: 28px;
+      margin-bottom: 20px;
+      display: block;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step h3 {
+      font-family: 'Alfa Slab One', serif;
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--amber);
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+      font-family: 'JetBrains Mono', monospace;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step p strong { color: var(--white); }
+
+    /* ── SCORING ────────────────────────────────── */
+    .scoring-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      margin-bottom: 2px;
+    }
+
+    .score-item {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 24px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .score-item-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .score-criterion {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .score-desc {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .score-pts {
+      font-family: 'Alfa Slab One', serif;
+      font-size: 32px;
+      font-weight: 400;
+      color: var(--amber);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .score-pts span {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .score-total {
+      background: #111009;
+      border: 1px solid var(--amber);
+      padding: 20px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .score-total-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--amber);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    .score-total-pts {
+      font-family: 'Alfa Slab One', serif;
+      font-size: 40px;
+      color: var(--amber);
+    }
+
+    .score-total-pts span {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* ── PRIZES ────────────────────────────────── */
+    .prizes-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+
+    @media (max-width: 768px) {
+      .prizes-grid { grid-template-columns: 1fr; }
+      .scoring-grid { grid-template-columns: 1fr; }
+    }
+
+    .prize-tier {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .prize-tier:hover { border-color: #3a3733; }
+
+    .prize-tier.gold {
+      background: linear-gradient(135deg, #1a1916 0%, #1d1a12 100%);
+      border-color: #3d3220;
+    }
+
+    .prize-tier.gold::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--amber), #ffc24a);
+    }
+
+    .prize-tier.silver::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: #6b6560;
+    }
+
+    .prize-tier.bronze::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: #8b5c2a;
+    }
+
+    .prize-tier.base::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--green);
+    }
+
+    .prize-stage {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .prize-tier-name {
+      font-family: 'Alfa Slab One', serif;
+      font-size: 26px;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .prize-range {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .prize-range strong { color: var(--amber); }
+
+    .prize-items {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .prize-items li {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--white);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.5;
+    }
+
+    .prize-items li::before {
+      content: '→';
+      color: var(--amber);
+      flex-shrink: 0;
+    }
+
+    .prize-badge {
+      background: var(--amber);
+      color: #0f0e0d;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      padding: 4px 12px;
+      display: inline-block;
+      margin-bottom: 20px;
+      width: fit-content;
+    }
+
+    /* ── GALLERY ───────────────────────────────── */
+    .gallery-header {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      text-align: center;
+      margin-bottom: 40px;
+      letter-spacing: 0.1em;
+    }
+
+    .gallery-header span { color: var(--amber); }
+
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2px;
+    }
+
+    .project-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 32px;
+      position: relative;
+      transition: border-color 0.2s;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s, transform 0.6s, border-color 0.2s;
+    }
+
+    .project-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .project-card:hover { border-color: #3a3733; }
+
+    .project-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--green);
+      border: 1px solid var(--green);
+      padding: 3px 8px;
+      display: inline-block;
+      margin-bottom: 16px;
+    }
+
+    .project-card h3 {
+      font-family: 'Alfa Slab One', serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+
+    .project-card p {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    .btn-project {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--amber);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      border: 1px solid var(--amber);
+      padding: 8px 20px;
+      display: inline-block;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .btn-project:hover {
+      background: var(--amber);
+      color: #0f0e0d;
+    }
+
+    .project-stat {
+      position: absolute;
+      top: 32px;
+      right: 32px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: #2a2825;
+      text-align: right;
+    }
+
+    .project-stat span {
+      display: block;
+      font-size: 16px;
+      font-weight: 700;
+      color: #2a2825;
+    }
+
+    /* ── FOOTER ────────────────────────────────── */
+    footer {
+      padding: 40px 48px;
+      border-top: 1px solid #1e1d1b;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: gap;
+    }
+
+    .footer-left {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .footer-left strong {
+      color: var(--amber);
+      display: block;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .footer-right {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #2a2825;
+      text-align: right;
+    }
+
+    .status-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: var(--green);
+      border-radius: 50%;
+      margin-right: 6px;
+      animation: blink 2s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* ── TERMINAL DECORATION ──────────────────── */
+    .terminal-line {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #2a2825;
+      padding: 0 48px;
+      margin-bottom: 4px;
+    }
+
+    .terminal-line .prompt { color: var(--green); }
+    .terminal-line .cmd { color: #3d3a36; }
+
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      .hero { padding: 48px 24px 40px; }
+      .section { padding: 56px 24px; }
+      .prizes-grid { grid-template-columns: 1fr; }
+      .gear-wrap { display: none; }
+      footer { padding: 32px 24px; flex-direction: column; gap: 20px; align-items: flex-start; }
+      .terminal-line { padding: 0 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── TICKER ── -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-inner" id="ticker">
+      <!-- items injected by JS -->
+    </div>
+  </div>
+
+  <!-- ── NAV ── -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <!-- Hack Club hand+flag SVG -->
+      <svg class="hack-flag" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Hack Club">
+        <!-- Hand/fist -->
+        <rect x="30" y="55" width="12" height="28" rx="4" fill="#f5a623"/>
+        <rect x="44" y="50" width="10" height="24" rx="4" fill="#f5a623"/>
+        <rect x="56" y="52" width="10" height="22" rx="4" fill="#f5a623"/>
+        <rect x="30" y="55" width="36" height="14" rx="3" fill="#f5a623"/>
+        <!-- Flag pole -->
+        <rect x="30" y="14" width="3" height="44" rx="1" fill="#f0ede8"/>
+        <!-- Flag pennant -->
+        <polygon points="33,14 33,36 60,25" fill="#ec3750"/>
+        <!-- Knuckle details -->
+        <rect x="44" y="60" width="10" height="2" rx="1" fill="rgba(0,0,0,0.15)"/>
+        <rect x="56" y="61" width="10" height="2" rx="1" fill="rgba(0,0,0,0.15)"/>
+      </svg>
+      <div class="nav-wordmark">
+        Bootstrap
+        <span>a hack club ysws program</span>
+      </div>
+    </a>
+    <a href="#apply" class="btn-nav">ship it</a>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <!-- Background gear -->
+    <div class="gear-wrap" aria-hidden="true">
+      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 30a20 20 0 1 1 0 40 20 20 0 0 1 0-40zm0 8a12 12 0 1 0 0 24 12 12 0 0 0 0-24z" fill="#f5a623"/>
+        <path d="M46 10h8l2 8a26 26 0 0 1 8.3 3.4l7.4-3.6 5.7 5.6-3.6 7.4A26 26 0 0 1 77 40l8 2v8l-8 2a26 26 0 0 1-3.4 8.3l3.6 7.4-5.6 5.7-7.4-3.6A26 26 0 0 1 54 73l-2 8h-8l-2-8a26 26 0 0 1-8.3-3.4l-7.4 3.6-5.7-5.6 3.6-7.4A26 26 0 0 1 23 54l-8-2v-8l8-2a26 26 0 0 1 3.4-8.3l-3.6-7.4 5.6-5.7 7.4 3.6A26 26 0 0 1 44 21l2-8z" fill="#f5a623"/>
+      </svg>
+    </div>
+
+    <div class="hero-eyebrow">Hack Club YSWS · Season 01</div>
+
+    <h1 class="hero-title">
+      Boot<span class="highlight">strap.</span>
+    </h1>
+
+    <p class="hero-sub">
+      <strong>build something real.</strong> get 5 real users. ship it.
+    </p>
+
+    <a href="#apply" class="btn-cta">ship it</a>
+
+    <!-- Metric cards -->
+    <div class="metrics" id="metrics">
+      <div class="metric-card" style="transition-delay: 0.1s">
+        <div class="metric-label">Valuation</div>
+        <div class="metric-value amber" id="m-val">priceless</div>
+      </div>
+      <div class="metric-card" style="transition-delay: 0.25s">
+        <div class="metric-label">Runway</div>
+        <div class="metric-value green" id="m-run">infinite</div>
+      </div>
+      <div class="metric-card" style="transition-delay: 0.4s">
+        <div class="metric-label">Team Size</div>
+        <div class="metric-value" id="m-team">—</div>
+      </div>
+      <div class="metric-card" style="transition-delay: 0.55s">
+        <div class="metric-label">Raised</div>
+        <div class="metric-value green" id="m-raised">—</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOUNDER BIO ── -->
+  <section class="section" style="border-top: 1px solid #1e1d1b;">
+    <div class="section-label">who made this</div>
+    <div style="display: grid; grid-template-columns: auto 1fr; gap: 40px; align-items: start; max-width: 860px;">
+      <div style="width: 72px; height: 72px; background: var(--card-bg); border: 1px solid var(--card-border); display: flex; align-items: center; justify-content: center; font-size: 32px; flex-shrink: 0;">👋</div>
+      <div>
+        <div style="font-family: 'Alfa Slab One', serif; font-size: 22px; color: var(--white); margin-bottom: 12px;">I'm Johnathan.</div>
+        <p style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--muted); line-height: 1.9; max-width: 640px;">
+          I'm 18, from the west of Ireland. I've founded 3 companies — a for-profit games studio, a non-profit STEM club with 22 members, and a web agency building sites for local sports teams and schools. I competed at Ireland's national science fair with a computer vision project analysing referee bias across 400 matches.<br/><br/>
+          I built Bootstrap because <strong style="color: var(--white);">the best way to learn how to start a company is to just start one.</strong> Not read about it. Not watch a YouTube video. Build something, put it in front of a real person, and see what happens.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TERMINAL DECORATION ── -->
+  <div class="terminal-line">
+    <span class="prompt">$ </span><span class="cmd">git init bootstrap &amp;&amp; npm run dev &amp;&amp; git push origin main # ship it before you're ready</span>
+  </div>
+
+  <!-- ── HOW IT WORKS ── -->
+  <section class="section">
+    <div class="section-label">How it works</div>
+    <p style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--muted); margin-bottom: 40px; margin-top: -24px;">it's not complicated. most people just never start.</p>
+    <div class="steps" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
+      <div class="step">
+        <span class="step-icon">🔨</span>
+        <h3>01 — Build</h3>
+        <p>A <strong>real product</strong>. SaaS, hardware, game, CLI, Chrome extension — doesn't matter. It needs a <strong>live URL</strong> and an <strong>open source repo</strong>. No mockups. No "coming soon". Working software only.</p>
+        <div class="step-num">01</div>
+      </div>
+      <div class="step">
+        <span class="step-icon">🧑</span>
+        <h3>02 — Get 5 real users</h3>
+        <p>Not you. Not your mum. <strong>5 real people</strong> who actually used it. Proof = a public analytics dashboard (Plausible, Umami, etc.) showing <strong>5+ unique visitors</strong> + at least one screenshot of real engagement — a message, sign-up email, or review.</p>
+        <div class="step-num">02</div>
+      </div>
+      <div class="step">
+        <span class="step-icon">🎤</span>
+        <h3>03 — Pitch it</h3>
+        <p>Record a <strong>2-minute video</strong>. Show the product working. Explain who it's for. Explain how it makes money. You don't need to be a good presenter. You just need to not be boring.</p>
+        <div class="step-num">03</div>
+      </div>
+      <div class="step">
+        <span class="step-icon">📦</span>
+        <h3>04 — Ship it</h3>
+        <p>Submit via the Bootstrap site. We score it, post it to the <strong>leaderboard</strong>, and ship prizes <strong>within a week</strong>. You ship, we ship. If it's real, you get prizes. If it's slop, you don't. Pretty simple.</p>
+        <div class="step-num">04</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SCORING ── -->
+  <section class="section">
+    <div class="section-label">How you're scored</div>
+    <div class="scoring-grid">
+      <div class="score-item">
+        <div class="score-item-left">
+          <div class="score-criterion">Live URL + Open Source Code</div>
+          <div class="score-desc">deployed &amp; public repo — no exceptions</div>
+        </div>
+        <div class="score-pts">20 <span>pts</span></div>
+      </div>
+      <div class="score-item">
+        <div class="score-item-left">
+          <div class="score-criterion">Real Users (not you)</div>
+          <div class="score-desc">public analytics (5+ uniques) + screenshot of real engagement</div>
+        </div>
+        <div class="score-pts">25 <span>pts</span></div>
+      </div>
+      <div class="score-item">
+        <div class="score-item-left">
+          <div class="score-criterion">2-Min Pitch Quality</div>
+          <div class="score-desc">problem, solution, who it's for — and how it makes money</div>
+        </div>
+        <div class="score-pts">25 <span>pts</span></div>
+      </div>
+      <div class="score-item">
+        <div class="score-item-left">
+          <div class="score-criterion">Revenue Model</div>
+          <div class="score-desc">how would this make money? show us.</div>
+        </div>
+        <div class="score-pts">20 <span>pts</span></div>
+      </div>
+    </div>
+    <div class="score-item" style="border: 1px solid var(--card-border); background: var(--card-bg); padding: 24px 28px; display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 2px;">
+      <div class="score-item-left">
+        <div class="score-criterion">Hackatime Hours</div>
+        <div class="score-desc">Hackatime (coding) or Lapse (hardware/design) — both work</div>
+      </div>
+      <div class="score-pts">10 <span>pts</span></div>
+    </div>
+    <div class="score-total" style="margin-top: 2px;">
+      <div class="score-total-label">Total possible score</div>
+      <div class="score-total-pts">100 <span>points</span></div>
+    </div>
+  </section>
+
+  <!-- ── PRIZES ── -->
+  <section class="section">
+    <div class="section-label">Prize tiers</div>
+    <div class="prizes-grid">
+
+      <div class="prize-tier gold">
+        <div class="prize-stage">Tier 1</div>
+        <div class="prize-tier-name">🥇 Funded</div>
+        <div class="prize-range"><strong>85–100 pts</strong> — you basically built a real company</div>
+        <ul class="prize-items">
+          <li>$25 Stripe credit</li>
+          <li>Porkbun domain voucher (1 year)</li>
+          <li>Railway hosting credit</li>
+        </ul>
+      </div>
+
+      <div class="prize-tier silver">
+        <div class="prize-stage">Tier 2</div>
+        <div class="prize-tier-name">🥈 Series A</div>
+        <div class="prize-range"><strong>70–84 pts</strong> — solid ship, real traction</div>
+        <ul class="prize-items">
+          <li>$25 Vercel credit</li>
+          <li>Porkbun domain voucher (1 year)</li>
+        </ul>
+      </div>
+
+      <div class="prize-tier bronze">
+        <div class="prize-stage">Tier 3</div>
+        <div class="prize-tier-name">🥉 Pre-seed</div>
+        <div class="prize-range"><strong>50–69 pts</strong> — shipped something, proved it works</div>
+        <ul class="prize-items">
+          <li>Porkbun domain voucher (1 year)</li>
+        </ul>
+      </div>
+
+      <div class="prize-tier base">
+        <div class="prize-stage">Tier 4</div>
+        <div class="prize-tier-name" style="color: var(--green);">✓ Bootstrapped</div>
+        <div class="prize-range"><strong>Shipped anything</strong> — you showed up. that's not nothing.</div>
+        <ul class="prize-items">
+          <li>Hack Club sticker pack</li>
+          <li>Listed in the Bootstrap Hall of Fame</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── LEADERBOARD ── -->
+  <section class="section" id="leaderboard" style="padding: 80px 48px;">
+    <div style="max-width: 800px; margin: 0 auto;">
+      <div class="hero-eyebrow">Live Rankings · Updated in Real Time</div>
+      <h2 style="font-family: 'Alfa Slab One', serif; font-size: clamp(32px, 5vw, 56px); font-weight: 400; line-height: 1.05; margin-bottom: 8px;">
+        The Leaderboard.
+      </h2>
+      <p style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--muted); margin-bottom: 40px;">
+        Scored 0–100. <span style="color: var(--amber);">Funded</span> = 85+&nbsp;&nbsp;·&nbsp;&nbsp;<span style="color:#aaa;">Series A</span> = 70+&nbsp;&nbsp;·&nbsp;&nbsp;<span style="color:#8b5c2a;">Pre-seed</span> = 50+&nbsp;&nbsp;·&nbsp;&nbsp;<span style="color:var(--green);">Bootstrapped</span> = &lt;50
+      </p>
+      <div id="leaderboard-body">
+        <p style="color:#6b6560;font-family:'JetBrains Mono',monospace;font-size:13px;padding:24px 0;">Loading...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SUBMIT ── -->
+  <section class="section" id="apply" style="padding: 80px 48px; border-top: 1px solid #2a2825;">
+    <div style="max-width: 560px; margin: 0 auto;">
+      <div class="hero-eyebrow" style="justify-content: center;">Applications Open · Rolling Basis</div>
+      <h2 style="font-family: 'Alfa Slab One', serif; font-size: clamp(32px, 5vw, 56px); font-weight: 400; line-height: 1.05; margin-bottom: 20px; text-align: center;">
+        Stop reading this.<br/><span style="color: var(--amber);">Go build something.</span>
+      </h2>
+      <p style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 40px; text-align: center;">
+        You don't need a team. You don't need funding. You don't need to be ready.<br/>You just need to start.
+      </p>
+      <form id="submit-form" style="display:flex;flex-direction:column;gap:12px;">
+        <input name="project_name" type="text" placeholder="Project name" required
+          style="background:#1a1916;border:1px solid #2a2825;color:#f0ede8;font-family:'JetBrains Mono',monospace;font-size:13px;padding:12px 16px;outline:none;width:100%;"
+          onfocus="this.style.borderColor='#f5a623'" onblur="this.style.borderColor='#2a2825'" />
+        <input name="builder_name" type="text" placeholder="Your name / handle" required
+          style="background:#1a1916;border:1px solid #2a2825;color:#f0ede8;font-family:'JetBrains Mono',monospace;font-size:13px;padding:12px 16px;outline:none;width:100%;"
+          onfocus="this.style.borderColor='#f5a623'" onblur="this.style.borderColor='#2a2825'" />
+        <input name="live_url" type="url" placeholder="Live URL (https://...)" required
+          style="background:#1a1916;border:1px solid #2a2825;color:#f0ede8;font-family:'JetBrains Mono',monospace;font-size:13px;padding:12px 16px;outline:none;width:100%;"
+          onfocus="this.style.borderColor='#f5a623'" onblur="this.style.borderColor='#2a2825'" />
+        <input name="github_url" type="url" placeholder="GitHub repo URL" required
+          style="background:#1a1916;border:1px solid #2a2825;color:#f0ede8;font-family:'JetBrains Mono',monospace;font-size:13px;padding:12px 16px;outline:none;width:100%;"
+          onfocus="this.style.borderColor='#f5a623'" onblur="this.style.borderColor='#2a2825'" />
+        <input name="pitch_url" type="url" placeholder="Pitch / demo video URL" required
+          style="background:#1a1916;border:1px solid #2a2825;color:#f0ede8;font-family:'JetBrains Mono',monospace;font-size:13px;padding:12px 16px;outline:none;width:100%;"
+          onfocus="this.style.borderColor='#f5a623'" onblur="this.style.borderColor='#2a2825'" />
+        <button id="submit-btn" type="submit" class="btn-cta" style="font-size:16px;padding:16px 40px;border:none;cursor:pointer;margin-top:8px;">ship it</button>
+        <p id="submit-msg" style="font-family:'JetBrains Mono',monospace;font-size:12px;min-height:18px;text-align:center;"></p>
+      </form>
+      <p style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #2a2825; margin-top: 16px; text-align: center;">
+        Must be &lt;18 years old to participate · Open worldwide
+      </p>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="footer-left">
+      <strong>Bootstrap</strong>
+      A Hack Club You Ship, We Ship program.<br/>
+      Built for teenagers who build real things.
+    </div>
+    <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #3d3a36; text-align: center; line-height: 1.8;">
+      estimated 6–10 hrs per project · ~$5/hr prize budget<br/>
+      all prizes digital and instant to deliver<br/>
+      <span style="color: #2a2825;">track time with</span> <span style="color: var(--amber);">Hackatime</span> <span style="color: #2a2825;">or</span> <span style="color: var(--amber);">Lapse</span>
+    </div>
+    <div class="footer-right">
+      <div style="margin-bottom: 8px;"><span class="status-dot"></span>accepting submissions</div>
+      <div>© 2026 Hack Club</div>
+      <div style="margin-top: 8px; font-size: 10px;">hackclub.com</div>
+      <div style="margin-top: 4px; font-size: 10px;">github.com/johnathanmcphilbin/Bootstrap</div>
+    </div>
+  </footer>
+
+  <script>
+    // ── TICKER ──
+    const tickerItems = [
+      '47 products shipped',
+      '$0 raised',
+      '100% bootstrapped',
+      'ship it',
+      'zero to one',
+      'open source everything',
+      'deploy before you\'re ready',
+      'valuation: priceless',
+      'just ship it',
+      'real products only',
+      'live url required',
+      'built by teenagers',
+      'runway: infinite',
+      '100 pts max · you got this',
+      '5 real users = 25 pts',
+      'hackatime or lapse · idfk, just track your time',
+      '$25 stripe credit awaits',
+      'ship → get paid',
+      'no pitch decks · just working software',
+    ];
+
+    const ticker = document.getElementById('ticker');
+    // Duplicate for seamless loop
+    const allItems = [...tickerItems, ...tickerItems];
+    ticker.innerHTML = allItems.map(t =>
+      `<span class="ticker-item">${t}</span>`
+    ).join('');
+
+    // ── METRIC CARD ANIMATIONS ──
+    const metrics = document.querySelectorAll('.metric-card');
+    const metricObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+    metrics.forEach(m => metricObs.observe(m));
+
+    // Count-up for numeric metrics; text metrics just appear
+    function countUp(el, end, prefix = '', suffix = '', duration = 1200) {
+      const start = performance.now();
+      const frame = (now) => {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = prefix + Math.floor(eased * end) + suffix;
+        if (progress < 1) requestAnimationFrame(frame);
+      };
+      requestAnimationFrame(frame);
+    }
+
+    // Animate metrics after a short delay
+    setTimeout(() => {
+      document.getElementById('m-val').textContent = 'priceless';
+      document.getElementById('m-run').textContent = 'infinite';
+
+      // Team size counts to 1
+      const mTeam = document.getElementById('m-team');
+      mTeam.textContent = '0';
+      countUp(mTeam, 1, '', '', 800);
+
+      // Raised counts to $0 (symbolic)
+      const mRaised = document.getElementById('m-raised');
+      mRaised.textContent = '$0';
+    }, 400);
+
+    // ── PROJECT CARD SCROLL ANIMATIONS ──
+    const cards = document.querySelectorAll('.project-card');
+    const cardObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+    cards.forEach(c => cardObs.observe(c));
+
+    // ── IMMEDIATE METRIC CARD TRIGGER if already visible ──
+    setTimeout(() => {
+      metrics.forEach(m => {
+        const rect = m.getBoundingClientRect();
+        if (rect.top < window.innerHeight) m.classList.add('visible');
+      });
+    }, 100);
+  </script>
+
+  <script src="/static/leaderboard.js"></script>
+</body>
+</html>

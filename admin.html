@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bootstrap — Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --bg: #0f0e0d; --amber: #f5a623; --green: #00c805; --white: #f0ede8; --muted: #6b6560; --card: #1a1916; --border: #2a2825; }
+    body { background: var(--bg); color: var(--white); font-family: 'JetBrains Mono', monospace; padding: 40px 48px; }
+    h1 { font-size: 28px; color: var(--amber); margin-bottom: 8px; }
+    .sub { font-size: 12px; color: var(--muted); margin-bottom: 40px; }
+    .login { max-width: 400px; }
+    .login input { width: 100%; background: var(--card); border: 1px solid var(--border); color: var(--white); font-family: 'JetBrains Mono', monospace; font-size: 14px; padding: 12px 16px; margin-bottom: 12px; outline: none; }
+    .login input:focus { border-color: var(--amber); }
+    .btn { background: var(--amber); color: #0f0e0d; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 10px 24px; border: none; cursor: pointer; }
+    .btn:hover { background: #ffc24a; }
+    .btn-sm { font-size: 11px; padding: 6px 14px; }
+    .btn-approve { background: var(--green); }
+    .btn-reject { background: #c0392b; color: white; }
+    table { width: 100%; border-collapse: collapse; margin-top: 24px; }
+    th { font-size: 10px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); border-bottom: 1px solid var(--border); padding: 8px 12px; text-align: left; }
+    td { font-size: 12px; color: var(--white); border-bottom: 1px solid var(--border); padding: 12px; vertical-align: top; }
+    td a { color: var(--amber); text-decoration: none; }
+    td a:hover { text-decoration: underline; }
+    .status-pending { color: var(--amber); }
+    .status-approved { color: var(--green); }
+    .status-rejected { color: #c0392b; }
+    .score-input { background: var(--card); border: 1px solid var(--border); color: var(--white); font-family: 'JetBrains Mono', monospace; font-size: 13px; padding: 6px 10px; width: 64px; outline: none; }
+    .score-input:focus { border-color: var(--amber); }
+    .actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .tier-badge { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 3px 8px; border: 1px solid; display: inline-block; }
+    .tier-Funded { color: var(--amber); border-color: var(--amber); }
+    .tier-Series { color: #aaa; border-color: #aaa; }
+    .tier-Pre { color: #8b5c2a; border-color: #8b5c2a; }
+    .tier-Bootstrapped { color: var(--green); border-color: var(--green); }
+    .tier-pending { color: var(--muted); border-color: var(--muted); }
+    #error { color: #c0392b; font-size: 12px; margin-top: 8px; }
+    #status-msg { color: var(--green); font-size: 12px; margin-bottom: 16px; height: 18px; }
+  </style>
+</head>
+<body>
+
+  <h1>Bootstrap Admin</h1>
+  <p class="sub">Review and score submissions.</p>
+
+  <div id="login-section" class="login">
+    <input type="password" id="password-input" placeholder="Admin password" />
+    <br/>
+    <button class="btn" onclick="login()">Login</button>
+    <div id="error"></div>
+  </div>
+
+  <div id="dashboard-section" style="display:none;">
+    <div id="status-msg"></div>
+    <table>
+      <thead>
+        <tr>
+          <th>Project</th>
+          <th>Builder</th>
+          <th>Links</th>
+          <th>Submitted</th>
+          <th>Status</th>
+          <th>Score / Tier</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="submissions-tbody">
+        <tr><td colspan="7" style="color: var(--muted); text-align:center; padding: 40px;">Loading...</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    let adminPassword = '';
+
+    function login() {
+      adminPassword = document.getElementById('password-input').value;
+      if (!adminPassword) return;
+      fetchSubmissions();
+    }
+
+    document.getElementById('password-input').addEventListener('keydown', e => {
+      if (e.key === 'Enter') login();
+    });
+
+    async function fetchSubmissions() {
+      try {
+        const res = await fetch('/api/admin/submissions', {
+          headers: { 'X-Admin-Password': adminPassword }
+        });
+        if (res.status === 401) {
+          document.getElementById('error').textContent = 'Wrong password.';
+          return;
+        }
+        const data = await res.json();
+        document.getElementById('login-section').style.display = 'none';
+        document.getElementById('dashboard-section').style.display = 'block';
+        renderSubmissions(data.submissions);
+      } catch (e) {
+        document.getElementById('error').textContent = 'Error connecting to server.';
+      }
+    }
+
+    function getTierClass(tier) {
+      if (!tier || tier === 'pending') return 'tier-pending';
+      if (tier.startsWith('Fund')) return 'tier-Funded';
+      if (tier.startsWith('Series')) return 'tier-Series';
+      if (tier.startsWith('Pre')) return 'tier-Pre';
+      return 'tier-Bootstrapped';
+    }
+
+    function renderSubmissions(submissions) {
+      const tbody = document.getElementById('submissions-tbody');
+      if (!submissions.length) {
+        tbody.innerHTML = '<tr><td colspan="7" style="color: var(--muted); text-align:center; padding: 40px;">No submissions yet.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = submissions.map(s => `
+        <tr id="row-${s.id}">
+          <td><strong>${s.project_name}</strong></td>
+          <td>${s.builder_name}</td>
+          <td>
+            <a href="${s.live_url}" target="_blank">Live</a> ·
+            <a href="${s.github_url}" target="_blank">GitHub</a> ·
+            <a href="${s.pitch_url}" target="_blank">Pitch</a>
+          </td>
+          <td>${new Date(s.created_at).toLocaleDateString()}</td>
+          <td><span class="status-${s.status}">${s.status}</span></td>
+          <td>
+            <input class="score-input" type="number" min="0" max="100" id="score-${s.id}" value="${s.score ?? ''}" placeholder="0–100" />
+            <br/><span class="tier-badge ${getTierClass(s.tier)}" id="tier-${s.id}">${s.tier ?? 'pending'}</span>
+          </td>
+          <td>
+            <div class="actions">
+              <button class="btn btn-sm btn-approve" onclick="updateSubmission('${s.id}', 'approved')">Approve</button>
+              <button class="btn btn-sm btn-reject" onclick="updateSubmission('${s.id}', 'rejected')">Reject</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    async function updateSubmission(id, status) {
+      const scoreInput = document.getElementById(`score-${id}`);
+      const score = scoreInput.value !== '' ? parseInt(scoreInput.value) : null;
+
+      try {
+        const res = await fetch(`/api/admin/submissions/${id}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Admin-Password': adminPassword
+          },
+          body: JSON.stringify({ score, status })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showStatus(`Updated successfully.`);
+          fetchSubmissions();
+        }
+      } catch (e) {
+        showStatus('Error updating submission.', true);
+      }
+    }
+
+    function showStatus(msg, isError = false) {
+      const el = document.getElementById('status-msg');
+      el.textContent = msg;
+      el.style.color = isError ? '#c0392b' : 'var(--green)';
+      setTimeout(() => el.textContent = '', 3000);
+    }
+  </script>
+
+</body>
+</html>
