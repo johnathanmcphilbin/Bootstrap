@@ -368,12 +368,15 @@
       right: 24px;
       pointer-events: none;
       user-select: none;
+      z-index: 0;
     }
 
     .step-icon {
       font-size: 28px;
       margin-bottom: 20px;
       display: block;
+      position: relative;
+      z-index: 1;
     }
 
     .step h3 {
@@ -382,6 +385,8 @@
       font-weight: 400;
       color: var(--amber);
       margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
     }
 
     .step p {
@@ -389,6 +394,8 @@
       color: var(--muted);
       line-height: 1.7;
       font-family: 'JetBrains Mono', monospace;
+      position: relative;
+      z-index: 1;
     }
 
     .step p strong { color: var(--white); }
