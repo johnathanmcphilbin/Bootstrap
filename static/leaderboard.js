@@ -28,21 +28,22 @@ function renderLeaderboard(entries) {
 
   el.innerHTML = entries.map(e => {
     const color = TIER_COLORS[e.tier] || '#6b6560';
-    const rank = e.rank <= 3 ? ['🥇','🥈','🥉'][e.rank - 1] : `#${e.rank}`;
+    const rank = `#${e.rank}`;
+    const rankColor = e.rank === 1 ? '#f5a623' : e.rank === 2 ? '#aaaaaa' : e.rank === 3 ? '#8b5c2a' : '#6b6560';
     return `
       <div class="lb-row" style="display:flex;align-items:center;gap:16px;padding:16px 0;border-bottom:1px solid #2a2825;">
-        <div style="font-family:'JetBrains Mono',monospace;font-size:14px;color:#6b6560;min-width:36px;">${rank}</div>
+        <div style="font-family:'Inter',sans-serif;font-size:13px;font-weight:700;color:${rankColor};min-width:36px;">${rank}</div>
         <div style="flex:1;min-width:0;">
           <div style="font-family:'Alfa Slab One',serif;font-size:17px;color:#f0ede8;margin-bottom:2px;">${e.project_name}</div>
-          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#6b6560;">by ${e.builder_name}</div>
+          <div style="font-family:'Inter',sans-serif;font-size:11px;color:#6b6560;">by ${e.builder_name}</div>
         </div>
-        <div style="display:flex;gap:10px;font-family:'JetBrains Mono',monospace;font-size:11px;">
+        <div style="display:flex;gap:10px;font-family:'Inter',sans-serif;font-size:11px;">
           ${e.live_url ? `<a href="${e.live_url}" target="_blank" style="color:#f5a623;text-decoration:none;">Live →</a>` : ''}
           ${e.github_url ? `<a href="${e.github_url}" target="_blank" style="color:#6b6560;text-decoration:none;">GitHub</a>` : ''}
         </div>
         <div style="text-align:right;min-width:80px;">
-          <div style="font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;color:#f0ede8;">${e.score}</div>
-          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:${color};">${e.tier}</div>
+          <div style="font-family:'Inter',sans-serif;font-size:20px;font-weight:700;color:#f0ede8;">${e.score}</div>
+          <div style="font-family:'Inter',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:${color};">${e.tier}</div>
         </div>
       </div>
     `;

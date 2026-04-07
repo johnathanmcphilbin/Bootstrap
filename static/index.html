@@ -6,7 +6,7 @@
   <title>Bootstrap — Hack Club YSWS</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=JetBrains+Mono:wght@400;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -26,7 +26,7 @@
     body {
       background-color: var(--bg);
       color: var(--white);
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Inter', sans-serif;
       overflow-x: hidden;
       position: relative;
     }
@@ -40,106 +40,6 @@
       pointer-events: none;
       z-index: 9999;
       opacity: 0.35;
-    }
-
-    /* ── TICKER ─────────────────────────────── */
-    .ticker {
-      background: #0a0a09;
-      border-bottom: 1px solid #1e1d1b;
-      padding: 8px 0;
-      overflow: hidden;
-      white-space: nowrap;
-      position: relative;
-    }
-
-    .ticker-inner {
-      display: inline-flex;
-      gap: 0;
-      animation: ticker-scroll 28s linear infinite;
-    }
-
-    .ticker-item {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--green);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 0 32px;
-    }
-
-    .ticker-item::after {
-      content: '◆';
-      margin-left: 32px;
-      opacity: 0.4;
-    }
-
-    @keyframes ticker-scroll {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-
-    /* ── NAV ─────────────────────────────────── */
-    nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px 48px;
-      border-bottom: 1px solid #1e1d1b;
-      position: relative;
-      z-index: 10;
-    }
-
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-    }
-
-    .hack-flag {
-      width: 36px;
-      height: 36px;
-      flex-shrink: 0;
-    }
-
-    .nav-wordmark {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--muted);
-      letter-spacing: 0.05em;
-      line-height: 1.3;
-    }
-
-    .nav-wordmark span {
-      display: block;
-      font-size: 10px;
-      color: #3d3a36;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-    }
-
-    .btn-nav {
-      background: var(--amber);
-      color: #0f0e0d;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 13px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      padding: 10px 24px;
-      border: none;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-      transition: background 0.15s, transform 0.1s;
-      clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
-    }
-
-    .btn-nav:hover {
-      background: #ffc24a;
-      transform: translateY(-1px);
     }
 
     /* ── HERO ─────────────────────────────────── */
@@ -162,25 +62,15 @@
     }
 
     .hero-eyebrow {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Inter', sans-serif;
       font-size: 11px;
       font-weight: 600;
       color: var(--amber);
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
+      text-transform: none;
+      letter-spacing: 0.04em;
       margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
     }
 
-    .hero-eyebrow::before {
-      content: '';
-      display: inline-block;
-      width: 24px;
-      height: 1px;
-      background: var(--amber);
-    }
 
     .hero-title {
       font-family: 'Alfa Slab One', serif;
@@ -191,7 +81,7 @@
       letter-spacing: -0.02em;
       position: relative;
       z-index: 1;
-      text-shadow: 4px 4px 0px rgba(245,166,35,0.15);
+      text-shadow: none;
     }
 
     .hero-title .highlight {
@@ -200,7 +90,7 @@
     }
 
     .hero-sub {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Inter', sans-serif;
       font-size: clamp(15px, 2vw, 20px);
       color: var(--muted);
       margin-top: 24px;
@@ -220,30 +110,24 @@
     .btn-cta {
       background: var(--amber);
       color: #0f0e0d;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 16px;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
       font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      padding: 16px 40px;
-      border: none;
+      text-transform: lowercase;
+      letter-spacing: 0.04em;
+      padding: 14px 36px;
+      border: 2px solid var(--amber);
       cursor: pointer;
       text-decoration: none;
       display: inline-block;
       position: relative;
       z-index: 1;
-      transition: all 0.15s;
-      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
-    }
-
-    .btn-cta::after {
-      content: ' →';
+      transition: background 0.1s, color 0.1s;
     }
 
     .btn-cta:hover {
-      background: #ffc24a;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(245,166,35,0.3);
+      background: transparent;
+      color: var(--amber);
     }
 
     /* ── METRIC CARDS ─────────────────────────── */
@@ -283,7 +167,7 @@
     .metric-card:hover { border-color: #3a3733; }
 
     .metric-label {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Inter', sans-serif;
       font-size: 10px;
       font-weight: 600;
       color: var(--muted);
@@ -327,23 +211,13 @@
     }
 
     .section-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
       color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      margin-bottom: 48px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .section-label::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: #1e1d1b;
+      text-transform: lowercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 40px;
     }
 
     .steps {
@@ -395,7 +269,7 @@
       font-size: 14px;
       color: var(--muted);
       line-height: 1.7;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Inter', sans-serif;
       position: relative;
       z-index: 1;
     }
@@ -434,7 +308,7 @@
     }
 
     .score-desc {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Inter', sans-serif;
       font-size: 11px;
       color: var(--muted);
     }
@@ -449,7 +323,7 @@
     }
 
     .score-pts span {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Inter', sans-serif;
       font-size: 11px;
       font-weight: 600;
       color: var(--muted);
@@ -465,7 +339,7 @@
     }
 
     .score-total-label {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Inter', sans-serif;
       font-size: 12px;
       font-weight: 700;
       color: var(--amber);
@@ -480,7 +354,7 @@
     }
 
     .score-total-pts span {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Inter', sans-serif;
       font-size: 13px;
       color: var(--muted);
     }
@@ -546,7 +420,7 @@
     }
 
     .prize-stage {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Inter', sans-serif;
       font-size: 9px;
       font-weight: 700;
       text-transform: uppercase;
@@ -567,7 +441,7 @@
     }
 
     .prize-range {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Inter', sans-serif;
       font-size: 12px;
       color: var(--muted);
       margin-bottom: 20px;
@@ -583,7 +457,7 @@
     }
 
     .prize-items li {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Inter', sans-serif;
       font-size: 12px;
       color: var(--white);
       display: flex;
@@ -601,7 +475,7 @@
     .prize-badge {
       background: var(--amber);
       color: #0f0e0d;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Inter', sans-serif;
       font-size: 10px;
       font-weight: 700;
       text-transform: uppercase;
@@ -614,7 +488,7 @@
 
     /* ── GALLERY ───────────────────────────────── */
     .gallery-header {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Inter', sans-serif;
       font-size: 13px;
       font-weight: 600;
       color: var(--muted);
@@ -650,7 +524,7 @@
     .project-card:hover { border-color: #3a3733; }
 
     .project-tag {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Inter', sans-serif;
       font-size: 9px;
       font-weight: 700;
       text-transform: uppercase;
@@ -671,7 +545,7 @@
     }
 
     .project-card p {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Inter', sans-serif;
       font-size: 12px;
       color: var(--muted);
       line-height: 1.7;
@@ -679,7 +553,7 @@
     }
 
     .btn-project {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Inter', sans-serif;
       font-size: 11px;
       font-weight: 700;
       color: var(--amber);
@@ -701,7 +575,7 @@
       position: absolute;
       top: 32px;
       right: 32px;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Inter', sans-serif;
       font-size: 10px;
       color: #2a2825;
       text-align: right;
@@ -725,7 +599,7 @@
     }
 
     .footer-left {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Inter', sans-serif;
       font-size: 12px;
       color: var(--muted);
       line-height: 1.7;
@@ -739,9 +613,9 @@
     }
 
     .footer-right {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Inter', sans-serif;
       font-size: 11px;
-      color: #2a2825;
+      color: var(--muted);
       text-align: right;
     }
 
@@ -770,7 +644,7 @@
     }
 
     .terminal-line .prompt { color: var(--green); }
-    .terminal-line .cmd { color: #3d3a36; }
+    .terminal-line .cmd { color: #6b6560; }
 
     /* ── RESPONSIVE ───────────────────────────── */
     @media (max-width: 768px) {
@@ -786,39 +660,6 @@
 </head>
 <body>
 
-  <!-- ── TICKER ── -->
-  <div class="ticker" aria-hidden="true">
-    <div class="ticker-inner" id="ticker">
-      <!-- items injected by JS -->
-    </div>
-  </div>
-
-  <!-- ── NAV ── -->
-  <nav>
-    <a href="#" class="nav-logo">
-      <!-- Hack Club hand+flag SVG -->
-      <svg class="hack-flag" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Hack Club">
-        <!-- Hand/fist -->
-        <rect x="30" y="55" width="12" height="28" rx="4" fill="#f5a623"/>
-        <rect x="44" y="50" width="10" height="24" rx="4" fill="#f5a623"/>
-        <rect x="56" y="52" width="10" height="22" rx="4" fill="#f5a623"/>
-        <rect x="30" y="55" width="36" height="14" rx="3" fill="#f5a623"/>
-        <!-- Flag pole -->
-        <rect x="30" y="14" width="3" height="44" rx="1" fill="#f0ede8"/>
-        <!-- Flag pennant -->
-        <polygon points="33,14 33,36 60,25" fill="#ec3750"/>
-        <!-- Knuckle details -->
-        <rect x="44" y="60" width="10" height="2" rx="1" fill="rgba(0,0,0,0.15)"/>
-        <rect x="56" y="61" width="10" height="2" rx="1" fill="rgba(0,0,0,0.15)"/>
-      </svg>
-      <div class="nav-wordmark">
-        Bootstrap
-        <span>a hack club ysws program</span>
-      </div>
-    </a>
-    <a href="#apply" class="btn-nav">ship it</a>
-  </nav>
-
   <!-- ── HERO ── -->
   <section class="hero">
     <!-- Background gear -->
@@ -829,7 +670,7 @@
       </svg>
     </div>
 
-    <div class="hero-eyebrow">Hack Club YSWS</div>
+    <div class="hero-eyebrow">hack club · ysws</div>
 
     <h1 class="hero-title">
       Boot<span class="highlight">strap.</span>
@@ -853,11 +694,11 @@
       </div>
       <div class="metric-card" style="transition-delay: 0.4s">
         <div class="metric-label">Team Size</div>
-        <div class="metric-value" id="m-team">—</div>
+        <div class="metric-value" id="m-team">1</div>
       </div>
       <div class="metric-card" style="transition-delay: 0.55s">
         <div class="metric-label">Raised</div>
-        <div class="metric-value green" id="m-raised">—</div>
+        <div class="metric-value green" id="m-raised">$0</div>
       </div>
     </div>
   </section>
@@ -866,10 +707,10 @@
   <section class="section" style="border-top: 1px solid #1e1d1b;">
     <div class="section-label">who made this</div>
     <div style="display: grid; grid-template-columns: auto 1fr; gap: 40px; align-items: start; max-width: 860px;">
-      <div style="width: 72px; height: 72px; background: var(--card-bg); border: 1px solid var(--card-border); display: flex; align-items: center; justify-content: center; font-size: 32px; flex-shrink: 0;">👋</div>
+      <div style="width: 72px; height: 72px; background: var(--card-bg); border: 1px solid var(--amber); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: 'Alfa Slab One', serif; font-size: 22px; color: var(--amber);">JM</div>
       <div>
         <div style="font-family: 'Alfa Slab One', serif; font-size: 22px; color: var(--white); margin-bottom: 12px;">I'm Johnathan.</div>
-        <p style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--muted); line-height: 1.9; max-width: 640px;">
+        <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: var(--muted); line-height: 1.9; max-width: 640px;">
           I'm 18, from the west of Ireland. I've founded 3 companies — a for-profit games studio, a non-profit STEM club with 22 members, and a web agency building sites for local sports teams and schools. I competed at Ireland's national science fair with a computer vision project analysing referee bias across 400 matches.<br/><br/>
           I built Bootstrap because <strong style="color: var(--white);">the best way to learn how to start a company is to just start one.</strong> Not read about it. Not watch a YouTube video. Build something, put it in front of a real person, and see what happens.
         </p>
@@ -877,36 +718,27 @@
     </div>
   </section>
 
-  <!-- ── TERMINAL DECORATION ── -->
-  <div class="terminal-line">
-    <span class="prompt">$ </span><span class="cmd">git init bootstrap &amp;&amp; npm run dev &amp;&amp; git push origin main # ship it before you're ready</span>
-  </div>
-
   <!-- ── HOW IT WORKS ── -->
   <section class="section">
     <div class="section-label">How it works</div>
-    <p style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--muted); margin-bottom: 40px; margin-top: -24px;">it's not complicated. most people just never start.</p>
+    <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: var(--muted); margin-bottom: 40px; margin-top: -24px;">it's not complicated. most people just never start.</p>
     <div class="steps" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
       <div class="step">
-        <span class="step-icon">🔨</span>
         <h3>01 — Build</h3>
         <p>A <strong>real product</strong>. SaaS, hardware, game, CLI, Chrome extension — doesn't matter. It needs a <strong>live URL</strong> and an <strong>open source repo</strong>. No mockups. No "coming soon". Working software only.</p>
         <div class="step-num">01</div>
       </div>
       <div class="step">
-        <span class="step-icon">🧑</span>
         <h3>02 — Get 5 real users</h3>
         <p>Not you. Not your mum. <strong>5 real people</strong> who actually used it. Proof = a public analytics dashboard (Plausible, Umami, etc.) showing <strong>5+ unique visitors</strong> + at least one screenshot of real engagement — a message, sign-up email, or review.</p>
         <div class="step-num">02</div>
       </div>
       <div class="step">
-        <span class="step-icon">🎤</span>
         <h3>03 — Pitch it</h3>
         <p>Record a <strong>2-minute video</strong>. Show the product working. Explain who it's for. Explain how it makes money. You don't need to be a good presenter. You just need to not be boring.</p>
         <div class="step-num">03</div>
       </div>
       <div class="step">
-        <span class="step-icon">📦</span>
         <h3>04 — Ship it</h3>
         <p>Submit via the Bootstrap site. We score it, post it to the <strong>leaderboard</strong>, and ship prizes <strong>within a week</strong>. You ship, we ship. If it's real, you get prizes. If it's slop, you don't. Pretty simple.</p>
         <div class="step-num">04</div>
@@ -967,7 +799,7 @@
 
       <div class="prize-tier gold">
         <div class="prize-stage">Tier 1</div>
-        <div class="prize-tier-name">🥇 Funded</div>
+        <div class="prize-tier-name">Funded</div>
         <div class="prize-range"><strong>85–100 pts</strong> — you basically built a real company</div>
         <ul class="prize-items">
           <li>$25 Stripe credit</li>
@@ -978,7 +810,7 @@
 
       <div class="prize-tier silver">
         <div class="prize-stage">Tier 2</div>
-        <div class="prize-tier-name">🥈 Series A</div>
+        <div class="prize-tier-name">Series A</div>
         <div class="prize-range"><strong>70–84 pts</strong> — solid ship, real traction</div>
         <ul class="prize-items">
           <li>$25 Vercel credit</li>
@@ -988,7 +820,7 @@
 
       <div class="prize-tier bronze">
         <div class="prize-stage">Tier 3</div>
-        <div class="prize-tier-name">🥉 Pre-seed</div>
+        <div class="prize-tier-name">Pre-seed</div>
         <div class="prize-range"><strong>50–69 pts</strong> — shipped something, proved it works</div>
         <ul class="prize-items">
           <li>Porkbun domain voucher (1 year)</li>
@@ -1012,11 +844,11 @@
   <!-- ── LEADERBOARD ── -->
   <section class="section" id="leaderboard" style="padding: 80px 48px;">
     <div style="max-width: 800px; margin: 0 auto;">
-      <div class="hero-eyebrow">Live Rankings · Updated in Real Time</div>
+      <div class="hero-eyebrow">leaderboard · updated in real time</div>
       <h2 style="font-family: 'Alfa Slab One', serif; font-size: clamp(32px, 5vw, 56px); font-weight: 400; line-height: 1.05; margin-bottom: 8px;">
         The Leaderboard.
       </h2>
-      <p style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--muted); margin-bottom: 40px;">
+      <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: var(--muted); margin-bottom: 40px;">
         Scored 0–100. <span style="color: var(--amber);">Funded</span> = 85+&nbsp;&nbsp;·&nbsp;&nbsp;<span style="color:#aaa;">Series A</span> = 70+&nbsp;&nbsp;·&nbsp;&nbsp;<span style="color:#8b5c2a;">Pre-seed</span> = 50+&nbsp;&nbsp;·&nbsp;&nbsp;<span style="color:var(--green);">Bootstrapped</span> = &lt;50
       </p>
       <div id="leaderboard-body">
@@ -1028,11 +860,11 @@
   <!-- ── SUBMIT ── -->
   <section class="section" id="apply" style="padding: 80px 48px; border-top: 1px solid #2a2825;">
     <div style="max-width: 560px; margin: 0 auto;">
-      <div class="hero-eyebrow" style="justify-content: center;">Applications Open · Rolling Basis</div>
+      <div class="hero-eyebrow" style="text-align: center;">applications open · rolling basis</div>
       <h2 style="font-family: 'Alfa Slab One', serif; font-size: clamp(32px, 5vw, 56px); font-weight: 400; line-height: 1.05; margin-bottom: 20px; text-align: center;">
         Stop reading this.<br/><span style="color: var(--amber);">Go build something.</span>
       </h2>
-      <p style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 40px; text-align: center;">
+      <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 40px; text-align: center;">
         You don't need a team. You don't need funding. You don't need to be ready.<br/>You just need to start.
       </p>
       <form id="submit-form" style="display:flex;flex-direction:column;gap:12px;">
@@ -1054,20 +886,23 @@
         <button id="submit-btn" type="submit" class="btn-cta" style="font-size:16px;padding:16px 40px;border:none;cursor:pointer;margin-top:8px;">ship it</button>
         <p id="submit-msg" style="font-family:'JetBrains Mono',monospace;font-size:12px;min-height:18px;text-align:center;"></p>
       </form>
-      <p style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6b6560; margin-top: 16px; text-align: center;">
+      <p style="font-family: 'Inter', sans-serif; font-size: 11px; color: #6b6560; margin-top: 16px; text-align: center;">
         Must be &lt;18 years old to participate · Open worldwide
       </p>
     </div>
   </section>
 
   <!-- ── FOOTER ── -->
+  <div class="terminal-line" style="padding: 12px 48px; border-top: 1px solid #1e1d1b; background: #0a0a09;">
+    <span class="prompt">$ </span><span class="cmd">git init bootstrap &amp;&amp; npm run dev &amp;&amp; git push origin main # ship it before you're ready</span>
+  </div>
   <footer>
     <div class="footer-left">
       <strong>Bootstrap</strong>
       A Hack Club You Ship, We Ship program.<br/>
       Built for teenagers who build real things.
     </div>
-    <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #6b6560; text-align: center; line-height: 1.8;">
+    <div style="font-family: 'Inter', sans-serif; font-size: 11px; color: #6b6560; text-align: center; line-height: 1.8;">
       estimated 6–10 hrs per project · ~$5/hr prize budget<br/>
       all prizes digital and instant to deliver<br/>
       <span style="color: #6b6560;">track time with</span> <span style="color: var(--amber);">Hackatime</span> <span style="color: #6b6560;">or</span> <span style="color: var(--amber);">Lapse</span>
@@ -1081,36 +916,6 @@
   </footer>
 
   <script>
-    // ── TICKER ──
-    const tickerItems = [
-      '47 products shipped',
-      '$0 raised',
-      '100% bootstrapped',
-      'ship it',
-      'zero to one',
-      'open source everything',
-      'deploy before you\'re ready',
-      'valuation: priceless',
-      'just ship it',
-      'real products only',
-      'live url required',
-      'built by teenagers',
-      'runway: infinite',
-      '100 pts max · you got this',
-      '5 real users = 25 pts',
-      'hackatime or lapse · idfk, just track your time',
-      '$25 stripe credit awaits',
-      'ship → get paid',
-      'no pitch decks · just working software',
-    ];
-
-    const ticker = document.getElementById('ticker');
-    // Duplicate for seamless loop
-    const allItems = [...tickerItems, ...tickerItems];
-    ticker.innerHTML = allItems.map(t =>
-      `<span class="ticker-item">${t}</span>`
-    ).join('');
-
     // ── METRIC CARD ANIMATIONS ──
     const metrics = document.querySelectorAll('.metric-card');
     const metricObs = new IntersectionObserver((entries) => {
