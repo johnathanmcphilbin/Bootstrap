@@ -1,4 +1,5 @@
 import os
+import uuid
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from supabase import create_client, Client
@@ -48,6 +49,44 @@ def index():
 def admin():
     return send_from_directory("static", "admin.html")
 
+ALLOWED_BUCKETS = {"videos", "decks"}
+ALLOWED_VIDEO_TYPES = {"video/mp4", "video/quicktime", "video/webm"}
+ALLOWED_DECK_TYPES = {"application/pdf"}
+MAX_SIZES = {"videos": 200 * 1024 * 1024, "decks": 20 * 1024 * 1024}
+
+@app.route("/api/upload-url", methods=["POST"])
+def get_upload_url():
+    try:
+        data = request.get_json()
+        bucket = data.get("bucket")
+        content_type = data.get("content_type")
+        file_size = data.get("file_size", 0)
+        filename = data.get("filename", "file")
+
+        if bucket not in ALLOWED_BUCKETS:
+            return jsonify({"error": "Invalid bucket"}), 400
+
+        allowed_types = ALLOWED_VIDEO_TYPES if bucket == "videos" else ALLOWED_DECK_TYPES
+        if content_type not in allowed_types:
+            return jsonify({"error": f"File type not allowed: {content_type}"}), 400
+
+        if file_size > MAX_SIZES[bucket]:
+            mb = MAX_SIZES[bucket] // (1024 * 1024)
+            return jsonify({"error": f"File too large (max {mb}MB)"}), 400
+
+        ext = filename.rsplit(".", 1)[-1].lower() if "." in filename else ""
+        path = f"{uuid.uuid4().hex}.{ext}"
+
+        result = supabase.storage.from_(bucket).create_signed_upload_url(path)
+        signed_url = result.get("signedURL") or result.get("signed_url")
+        if not signed_url:
+            return jsonify({"error": "Could not generate upload URL"}), 500
+
+        public_url = f"{SUPABASE_URL}/storage/v1/object/public/{bucket}/{path}"
+        return jsonify({"signed_url": signed_url, "public_url": public_url})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 @app.route("/api/leaderboard", methods=["GET"])
 def leaderboard():
     try:
@@ -88,6 +127,7 @@ def submit():
             "live_url": data["live_url"],
             "github_url": data["github_url"],
             "pitch_url": data["pitch_url"],
+            "deck_url": data.get("deck_url"),
             "score": None,
             "tier": "pending",
             "status": "pending",

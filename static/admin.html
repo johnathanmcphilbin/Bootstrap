@@ -125,6 +125,7 @@
             <a href="${s.live_url}" target="_blank">Live</a> ·
             <a href="${s.github_url}" target="_blank">GitHub</a> ·
             <a href="${s.pitch_url}" target="_blank">Pitch</a>
+            ${s.deck_url ? ` · <a href="${s.deck_url}" target="_blank" style="color:var(--green);">Deck</a>` : ''}
           </td>
           <td>${new Date(s.created_at).toLocaleDateString()}</td>
           <td><span class="status-${s.status}">${s.status}</span></td>

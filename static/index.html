@@ -107,6 +107,54 @@
 
     input::placeholder { color: #6b6560; }
 
+    /* ── UPLOAD ZONES ─────────────────────────── */
+    .upload-zone {
+      border: 2px dashed #2a2825;
+      background: #1a1916;
+      padding: 28px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      position: relative;
+      user-select: none;
+    }
+    .upload-zone:hover, .upload-zone.drag-over {
+      border-color: var(--amber);
+      background: #1d1a12;
+    }
+    .upload-zone-green:hover, .upload-zone-green.drag-over {
+      border-color: var(--green);
+      background: #111a11;
+    }
+    .upload-icon {
+      font-family: 'Alfa Slab One', serif;
+      font-size: 22px;
+      color: var(--amber);
+      margin-bottom: 8px;
+    }
+    .upload-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+    .upload-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .upload-progress {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      color: var(--amber);
+      margin-top: 10px;
+      min-height: 16px;
+    }
+    .upload-zone.done { border-style: solid; border-color: var(--amber); }
+    .upload-zone-green.done { border-color: var(--green); }
+    .upload-zone.done .upload-progress { color: var(--green); }
+
     .btn-cta {
       background: var(--amber);
       color: #0f0e0d;
@@ -257,7 +305,7 @@
 
     .step h3 {
       font-family: 'Alfa Slab One', serif;
-      font-size: 24px;
+      font-size: 32px;
       font-weight: 400;
       color: var(--amber);
       margin-bottom: 12px;
@@ -431,7 +479,7 @@
 
     .prize-tier-name {
       font-family: 'Alfa Slab One', serif;
-      font-size: 26px;
+      font-size: 34px;
       font-weight: 400;
       color: var(--white);
       margin-bottom: 4px;
@@ -703,21 +751,6 @@
     </div>
   </section>
 
-  <!-- ── FOUNDER BIO ── -->
-  <section class="section" style="border-top: 1px solid #1e1d1b;">
-    <div class="section-label">who made this</div>
-    <div style="display: grid; grid-template-columns: auto 1fr; gap: 40px; align-items: start; max-width: 860px;">
-      <div style="width: 72px; height: 72px; background: var(--card-bg); border: 1px solid var(--amber); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: 'Alfa Slab One', serif; font-size: 22px; color: var(--amber);">JM</div>
-      <div>
-        <div style="font-family: 'Alfa Slab One', serif; font-size: 22px; color: var(--white); margin-bottom: 12px;">I'm Johnathan.</div>
-        <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: var(--muted); line-height: 1.9; max-width: 640px;">
-          I'm 18, from the west of Ireland. I've founded 3 companies — a for-profit games studio, a non-profit STEM club with 22 members, and a web agency building sites for local sports teams and schools. I competed at Ireland's national science fair with a computer vision project analysing referee bias across 400 matches.<br/><br/>
-          I built Bootstrap because <strong style="color: var(--white);">the best way to learn how to start a company is to just start one.</strong> Not read about it. Not watch a YouTube video. Build something, put it in front of a real person, and see what happens.
-        </p>
-      </div>
-    </div>
-  </section>
-
   <!-- ── HOW IT WORKS ── -->
   <section class="section">
     <div class="section-label">How it works</div>
@@ -786,9 +819,16 @@
       </div>
       <div class="score-pts">10 <span>pts</span></div>
     </div>
+    <div class="score-item" style="border: 1px solid #2a3a2a; background: #111a11; padding: 24px 28px; display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 2px;">
+      <div class="score-item-left">
+        <div class="score-criterion">Pitch Deck <span style="font-size: 11px; font-weight: 500; color: var(--green); background: #0d1f0d; border: 1px solid #1a3a1a; padding: 2px 8px; margin-left: 8px;">optional</span></div>
+        <div class="score-desc">a slide deck (google slides, notion, anything) — problem, solution, market, why you</div>
+      </div>
+      <div class="score-pts" style="color: var(--green);">+15 <span>pts</span></div>
+    </div>
     <div class="score-total" style="margin-top: 2px;">
       <div class="score-total-label">Total possible score</div>
-      <div class="score-total-pts">100 <span>points</span></div>
+      <div class="score-total-pts">115 <span>points</span></div>
     </div>
   </section>
 
@@ -845,7 +885,7 @@
   <section class="section" id="leaderboard" style="padding: 80px 48px;">
     <div style="max-width: 800px; margin: 0 auto;">
       <div class="hero-eyebrow">leaderboard · updated in real time</div>
-      <h2 style="font-family: 'Alfa Slab One', serif; font-size: clamp(32px, 5vw, 56px); font-weight: 400; line-height: 1.05; margin-bottom: 8px;">
+      <h2 style="font-family: 'Alfa Slab One', serif; font-size: clamp(48px, 6vw, 72px); font-weight: 400; line-height: 1.05; margin-bottom: 8px;">
         The Leaderboard.
       </h2>
       <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: var(--muted); margin-bottom: 40px;">
@@ -861,7 +901,7 @@
   <section class="section" id="apply" style="padding: 80px 48px; border-top: 1px solid #2a2825;">
     <div style="max-width: 560px; margin: 0 auto;">
       <div class="hero-eyebrow" style="text-align: center;">applications open · rolling basis</div>
-      <h2 style="font-family: 'Alfa Slab One', serif; font-size: clamp(32px, 5vw, 56px); font-weight: 400; line-height: 1.05; margin-bottom: 20px; text-align: center;">
+      <h2 style="font-family: 'Alfa Slab One', serif; font-size: clamp(48px, 6vw, 72px); font-weight: 400; line-height: 1.05; margin-bottom: 20px; text-align: center;">
         Stop reading this.<br/><span style="color: var(--amber);">Go build something.</span>
       </h2>
       <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 40px; text-align: center;">
@@ -880,15 +920,46 @@
         <input name="github_url" type="url" placeholder="GitHub repo URL" required
           style="background:#1a1916;border:1px solid #2a2825;color:#f0ede8;font-family:'JetBrains Mono',monospace;font-size:13px;padding:12px 16px;outline:none;width:100%;"
           onfocus="this.style.borderColor='#f5a623'" onblur="this.style.borderColor='#2a2825'" />
-        <input name="pitch_url" type="url" placeholder="Pitch / demo video URL" required
-          style="background:#1a1916;border:1px solid #2a2825;color:#f0ede8;font-family:'JetBrains Mono',monospace;font-size:13px;padding:12px 16px;outline:none;width:100%;"
-          onfocus="this.style.borderColor='#f5a623'" onblur="this.style.borderColor='#2a2825'" />
+        <!-- Video upload -->
+        <div id="video-drop" class="upload-zone" data-field="pitch_url" data-accept="video/mp4,video/mov,video/quicktime,video/webm">
+          <div class="upload-icon">▶</div>
+          <div class="upload-label">drop demo video here</div>
+          <div class="upload-sub">mp4 / mov / webm · max 200mb</div>
+          <div class="upload-progress" id="video-progress"></div>
+          <input type="file" accept="video/mp4,video/mov,video/quicktime,video/webm" style="display:none" id="video-file-input" />
+        </div>
+        <input name="pitch_url" type="hidden" id="pitch_url_val" required />
+
+        <!-- Deck upload -->
+        <div id="deck-drop" class="upload-zone upload-zone-green" data-field="deck_url" data-accept="application/pdf">
+          <div class="upload-icon" style="color:var(--green);">PDF</div>
+          <div class="upload-label">drop pitch deck here <span style="color:var(--green);font-size:11px;">optional · +15 pts</span></div>
+          <div class="upload-sub">pdf only · max 20mb</div>
+          <div class="upload-progress" id="deck-progress"></div>
+          <input type="file" accept="application/pdf" style="display:none" id="deck-file-input" />
+        </div>
+        <input name="deck_url" type="hidden" id="deck_url_val" />
         <button id="submit-btn" type="submit" class="btn-cta" style="font-size:16px;padding:16px 40px;border:none;cursor:pointer;margin-top:8px;">ship it</button>
         <p id="submit-msg" style="font-family:'JetBrains Mono',monospace;font-size:12px;min-height:18px;text-align:center;"></p>
       </form>
       <p style="font-family: 'Inter', sans-serif; font-size: 11px; color: #6b6560; margin-top: 16px; text-align: center;">
         Must be &lt;18 years old to participate · Open worldwide
       </p>
+    </div>
+  </section>
+
+  <!-- ── FOUNDER BIO ── -->
+  <section class="section">
+    <div class="section-label">who made this</div>
+    <div style="display: grid; grid-template-columns: auto 1fr; gap: 40px; align-items: start; max-width: 860px;">
+      <div style="width: 72px; height: 72px; background: var(--card-bg); border: 1px solid var(--amber); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: 'Alfa Slab One', serif; font-size: 22px; color: var(--amber);">JM</div>
+      <div>
+        <div style="font-family: 'Alfa Slab One', serif; font-size: 22px; color: var(--white); margin-bottom: 12px;">I'm Johnathan.</div>
+        <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: var(--muted); line-height: 1.9; max-width: 640px;">
+          I'm 18, from the west of Ireland. I've founded 3 companies — a for-profit games studio, a non-profit STEM club with 22 members, and a web agency building sites for local sports teams and schools. I competed at Ireland's national science fair with a computer vision project analysing referee bias across 400 matches.<br/><br/>
+          I built Bootstrap because <strong style="color: var(--white);">the best way to learn how to start a company is to just start one.</strong> Not read about it. Not watch a YouTube video. Build something, put it in front of a real person, and see what happens.
+        </p>
+      </div>
     </div>
   </section>
 
