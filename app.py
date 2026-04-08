@@ -224,6 +224,14 @@ def submit():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@app.route("/api/interest/count", methods=["GET"])
+def interest_count():
+    try:
+        result = supabase.table("interest").select("id", count="exact").execute()
+        return jsonify({"count": result.count})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 @app.route("/api/admin/interest", methods=["GET"])
 @require_admin
 def admin_interest():

@@ -202,8 +202,18 @@ async function submitProject(e) {
 }
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
+async function fetchInterestCount() {
+  try {
+    const res = await fetch('/api/interest/count');
+    const data = await res.json();
+    const el = document.getElementById('interest-count');
+    if (el && data.count !== undefined) el.textContent = data.count;
+  } catch {}
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   fetchLeaderboard();
+  fetchInterestCount();
 
   setupUploadZone('video-drop', 'video-file-input', 'pitch_url_val', 'videos', 200);
   setupUploadZone('deck-drop', 'deck-file-input', 'deck_url_val', 'decks', 20);
@@ -243,15 +253,16 @@ async function submitInterest(e) {
       msg.style.color = '#00c805';
       msg.textContent = "you're on the list. we'll be in touch.";
       form.reset();
+      const el = document.getElementById('interest-count');
+      if (el && el.textContent !== '—') el.textContent = parseInt(el.textContent) + 1;
     } else {
       msg.style.color = '#c0392b';
       msg.textContent = data.error || 'something went wrong.';
-      btn.disabled = false;
-      btn.textContent = "i'm interested";
     }
   } catch {
     msg.style.color = '#c0392b';
     msg.textContent = 'network error. try again.';
+  } finally {
     btn.disabled = false;
     btn.textContent = "i'm interested";
   }

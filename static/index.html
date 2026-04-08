@@ -1011,7 +1011,11 @@
         <!-- RIGHT: interest form -->
         <div style="background: #111009; border: 1px solid #2a3520; padding: 40px;">
           <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.16em; color: var(--green); margin-bottom: 8px;">not built yet?</div>
-          <div style="font-family: 'Alfa Slab One', serif; font-size: 22px; color: var(--white); margin-bottom: 6px;">I'm interested</div>
+          <div style="display:flex;align-items:baseline;gap:16px;margin-bottom:6px;">
+            <div style="font-family: 'Alfa Slab One', serif; font-size: 22px; color: var(--white);">I'm interested</div>
+            <div style="font-family:'Alfa Slab One',serif;font-size:32px;color:var(--green);" id="interest-count">—</div>
+            <div style="font-size:11px;color:var(--muted);">signed up</div>
+          </div>
           <p style="font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 28px;">Register your interest and we'll let you know when Bootstrap officially opens.</p>
           <form id="interest-form" style="display:flex;flex-direction:column;gap:10px;">
             <input name="int_name" type="text" placeholder="your name" required
