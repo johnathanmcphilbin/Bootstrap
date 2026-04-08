@@ -143,8 +143,8 @@ def interest():
         if not data.get("name") or not data.get("age") or not data.get("country"):
             return jsonify({"error": "Missing required fields"}), 400
         age = int(data["age"])
-        if age < 10 or age > 17:
-            return jsonify({"error": "Must be under 18 to participate"}), 400
+        if age < 10 or age > 19:
+            return jsonify({"error": "Must be 19 or under to participate"}), 400
         supabase.table("interest").insert({
             "name": data["name"],
             "age": age,
