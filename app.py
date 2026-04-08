@@ -29,8 +29,10 @@ supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 def send_notification(subject, body):
     if not GMAIL_USER or not GMAIL_APP_PASSWORD:
+        print(f"EMAIL SKIP: GMAIL_USER={GMAIL_USER!r} GMAIL_APP_PASSWORD set={bool(GMAIL_APP_PASSWORD)}", flush=True)
         return
     try:
+        print(f"EMAIL SEND: to={NOTIFY_EMAIL} subject={subject!r}", flush=True)
         msg = MIMEText(body)
         msg["Subject"] = subject
         msg["From"] = GMAIL_USER
@@ -38,8 +40,9 @@ def send_notification(subject, body):
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
             smtp.login(GMAIL_USER, GMAIL_APP_PASSWORD)
             smtp.sendmail(GMAIL_USER, NOTIFY_EMAIL, msg.as_string())
-    except Exception:
-        pass  # never let email errors break the main request
+        print("EMAIL OK", flush=True)
+    except Exception as e:
+        print(f"EMAIL ERROR: {e}", flush=True)
 
 def get_tier(score):
     if score is None:
