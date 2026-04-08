@@ -178,6 +178,7 @@ async function submitProject(e) {
     });
     const data = await res.json();
     if (res.ok) {
+      if (window.posthog) posthog.capture('project_submitted');
       msg.style.color = '#00c805';
       msg.textContent = "submitted! we'll review it soon.";
       form.reset();
@@ -238,6 +239,7 @@ async function submitInterest(e) {
     });
     const data = await res.json();
     if (res.ok) {
+      if (window.posthog) posthog.capture('interest_registered', { country: payload.country, age: payload.age });
       msg.style.color = '#00c805';
       msg.textContent = "you're on the list. we'll be in touch.";
       form.reset();
