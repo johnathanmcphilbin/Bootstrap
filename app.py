@@ -281,6 +281,37 @@ def update_submission(sub_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+ALLOWED_PARTNERSHIP_TYPES = {"school", "company", "organisation", "other"}
+
+@app.route("/api/partnership", methods=["POST"])
+@rate_limit(max_requests=3, window=300)
+def partnership():
+    try:
+        data = request.get_json()
+        if not data.get("org_name") or not data.get("contact_name") or not data.get("contact_email"):
+            return jsonify({"error": "Missing required fields"}), 400
+        org_type = data.get("org_type", "other")
+        if org_type not in ALLOWED_PARTNERSHIP_TYPES:
+            org_type = "other"
+        supabase.table("partnerships").insert({
+            "org_name": data["org_name"],
+            "org_type": org_type,
+            "contact_name": data["contact_name"],
+            "contact_email": data["contact_email"],
+            "interest": data.get("interest", ""),
+        }).execute()
+        send_notification(
+            f"New partnership interest: {data['org_name']}",
+            f"Org: {data['org_name']}\n"
+            f"Type: {org_type}\n"
+            f"Contact: {data['contact_name']}\n"
+            f"Email: {data['contact_email']}\n"
+            f"Interest: {data.get('interest') or 'not provided'}\n"
+        )
+        return jsonify({"success": True}), 201
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))
     app.run(host="0.0.0.0", port=port)

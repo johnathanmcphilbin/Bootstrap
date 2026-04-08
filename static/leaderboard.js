@@ -223,7 +223,52 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const interestForm = document.getElementById('interest-form');
   if (interestForm) interestForm.addEventListener('submit', submitInterest);
+
+  const partnerForm = document.getElementById('partnership-form');
+  if (partnerForm) partnerForm.addEventListener('submit', submitPartnership);
 });
+
+async function submitPartnership(e) {
+  e.preventDefault();
+  const form = document.getElementById('partnership-form');
+  const btn = document.getElementById('partner-btn');
+  const msg = document.getElementById('partner-msg');
+
+  const payload = {
+    org_name: form.org_name.value.trim(),
+    org_type: form.org_type.value,
+    contact_name: form.contact_name.value.trim(),
+    contact_email: form.contact_email.value.trim(),
+    interest: form.interest.value.trim() || null,
+  };
+
+  btn.disabled = true;
+  btn.textContent = 'sending...';
+
+  try {
+    const res = await fetch('/api/partnership', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json();
+    if (res.ok) {
+      if (window.posthog) posthog.capture('partnership_interest', { org_type: payload.org_type });
+      msg.style.color = '#00c805';
+      msg.textContent = "got it. we'll be in touch soon.";
+      form.reset();
+    } else {
+      msg.style.color = '#c0392b';
+      msg.textContent = data.error || 'something went wrong.';
+    }
+  } catch {
+    msg.style.color = '#c0392b';
+    msg.textContent = 'network error. try again.';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'get in touch';
+  }
+}
 
 async function submitInterest(e) {
   e.preventDefault();
