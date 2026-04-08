@@ -209,4 +209,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const form = document.getElementById('submit-form');
   if (form) form.addEventListener('submit', submitProject);
+
+  const interestForm = document.getElementById('interest-form');
+  if (interestForm) interestForm.addEventListener('submit', submitInterest);
 });
+
+async function submitInterest(e) {
+  e.preventDefault();
+  const form = document.getElementById('interest-form');
+  const btn = form.querySelector('button[type="submit"]');
+  const msg = document.getElementById('interest-msg');
+
+  const payload = {
+    name: form.int_name.value.trim(),
+    age: parseInt(form.int_age.value),
+    country: form.int_country.value.trim(),
+    email: form.int_email.value.trim() || null,
+  };
+
+  btn.disabled = true;
+  btn.textContent = 'sending...';
+
+  try {
+    const res = await fetch('/api/interest', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json();
+    if (res.ok) {
+      msg.style.color = '#00c805';
+      msg.textContent = "you're on the list. we'll be in touch.";
+      form.reset();
+    } else {
+      msg.style.color = '#c0392b';
+      msg.textContent = data.error || 'something went wrong.';
+      btn.disabled = false;
+      btn.textContent = "i'm interested";
+    }
+  } catch {
+    msg.style.color = '#c0392b';
+    msg.textContent = 'network error. try again.';
+    btn.disabled = false;
+    btn.textContent = "i'm interested";
+  }
+}

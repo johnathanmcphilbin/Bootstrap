@@ -1,5 +1,7 @@
 import os
 import uuid
+import time
+from collections import defaultdict
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from supabase import create_client, Client
@@ -9,7 +11,7 @@ from functools import wraps
 load_dotenv()
 
 app = Flask(__name__, static_folder='static')
-CORS(app)
+CORS(app, resources={r"/api/*": {"origins": os.environ.get("ALLOWED_ORIGIN", "*")}})
 
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
 SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
@@ -31,6 +33,24 @@ def get_tier(score):
         return "Pre-seed"
     else:
         return "Bootstrapped"
+
+# Simple in-memory rate limiter: max requests per window per IP
+_rate_store = defaultdict(list)
+
+def rate_limit(max_requests=5, window=60):
+    def decorator(f):
+        @wraps(f)
+        def wrapped(*args, **kwargs):
+            ip = request.headers.get("X-Forwarded-For", request.remote_addr).split(",")[0].strip()
+            key = f"{f.__name__}:{ip}"
+            now = time.time()
+            _rate_store[key] = [t for t in _rate_store[key] if now - t < window]
+            if len(_rate_store[key]) >= max_requests:
+                return jsonify({"error": "Too many requests. Slow down."}), 429
+            _rate_store[key].append(now)
+            return f(*args, **kwargs)
+        return wrapped
+    return decorator
 
 def require_admin(f):
     @wraps(f)
@@ -57,8 +77,11 @@ ALLOWED_BUCKETS = {"videos", "decks"}
 ALLOWED_VIDEO_TYPES = {"video/mp4", "video/quicktime", "video/webm"}
 ALLOWED_DECK_TYPES = {"application/pdf"}
 MAX_SIZES = {"videos": 200 * 1024 * 1024, "decks": 20 * 1024 * 1024}
+ALLOWED_EXTENSIONS = {"videos": {"mp4", "mov", "webm"}, "decks": {"pdf"}}
+ALLOWED_STATUSES = {"pending", "approved", "rejected"}
 
 @app.route("/api/upload-url", methods=["POST"])
+@rate_limit(max_requests=20, window=60)
 def get_upload_url():
     try:
         data = request.get_json()
@@ -79,6 +102,8 @@ def get_upload_url():
             return jsonify({"error": f"File too large (max {mb}MB)"}), 400
 
         ext = filename.rsplit(".", 1)[-1].lower() if "." in filename else ""
+        if ext not in ALLOWED_EXTENSIONS[bucket]:
+            return jsonify({"error": f"File extension not allowed: .{ext}"}), 400
         path = f"{uuid.uuid4().hex}.{ext}"
 
         result = supabase.storage.from_(bucket).create_signed_upload_url(path)
@@ -88,6 +113,26 @@ def get_upload_url():
 
         public_url = f"{SUPABASE_URL}/storage/v1/object/public/{bucket}/{path}"
         return jsonify({"signed_url": signed_url, "public_url": public_url})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route("/api/interest", methods=["POST"])
+@rate_limit(max_requests=3, window=300)
+def interest():
+    try:
+        data = request.get_json()
+        if not data.get("name") or not data.get("age") or not data.get("country"):
+            return jsonify({"error": "Missing required fields"}), 400
+        age = int(data["age"])
+        if age < 10 or age > 17:
+            return jsonify({"error": "Must be under 18 to participate"}), 400
+        supabase.table("interest").insert({
+            "name": data["name"],
+            "age": age,
+            "country": data["country"],
+            "email": data.get("email"),
+        }).execute()
+        return jsonify({"success": True}), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -118,6 +163,7 @@ def leaderboard():
         return jsonify({"error": str(e)}), 500
 
 @app.route("/api/submit", methods=["POST"])
+@rate_limit(max_requests=5, window=300)
 def submit():
     try:
         data = request.get_json()
@@ -137,6 +183,18 @@ def submit():
             "status": "pending",
         }).execute()
         return jsonify({"success": True, "id": result.data[0]["id"]}), 201
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route("/api/admin/interest", methods=["GET"])
+@require_admin
+def admin_interest():
+    try:
+        result = supabase.table("interest") \
+            .select("*") \
+            .order("created_at", desc=True) \
+            .execute()
+        return jsonify({"interest": result.data})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -163,6 +221,8 @@ def update_submission(sub_id):
             update["score"] = score
             update["tier"] = get_tier(score)
         if "status" in data:
+            if data["status"] not in ALLOWED_STATUSES:
+                return jsonify({"error": "Invalid status"}), 400
             update["status"] = data["status"]
         result = supabase.table("submissions") \
             .update(update) \

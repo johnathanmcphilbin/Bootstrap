@@ -696,6 +696,7 @@
 
     /* ── RESPONSIVE ───────────────────────────── */
     @media (max-width: 768px) {
+      .apply-grid { grid-template-columns: 1fr !important; }
       nav { padding: 16px 24px; }
       .hero { padding: 48px 24px 40px; }
       .section { padding: 56px 24px; }
@@ -920,16 +921,23 @@
   </section>
 
   <!-- ── SUBMIT ── -->
-  <section class="section" id="apply" style="padding: 80px 48px; border-top: 1px solid #2a2825;">
-    <div style="max-width: 560px; margin: 0 auto;">
-      <div class="hero-eyebrow" style="text-align: center;">applications open · rolling basis</div>
-      <h2 style="font-family: 'Alfa Slab One', serif; font-size: clamp(48px, 6vw, 72px); font-weight: 400; line-height: 1.05; margin-bottom: 20px; text-align: center;">
-        Stop reading this.<br/><span style="color: var(--amber);">Go build something.</span>
+  <section class="section" id="apply" style="padding: 80px 48px;">
+    <div style="max-width: 1100px; margin: 0 auto;">
+
+      <!-- heading -->
+      <div class="hero-eyebrow" style="margin-bottom: 12px;">not open yet · but you can submit for review</div>
+      <h2 style="font-family: 'Alfa Slab One', serif; font-size: clamp(40px, 5vw, 64px); font-weight: 400; line-height: 1.05; margin-bottom: 48px;">
+        Built something?<br/><span style="color: var(--amber);">Submit it now.</span>
       </h2>
-      <p style="font-family: 'Inter', sans-serif; font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 40px; text-align: center;">
-        You don't need a team. You don't need funding. You don't need to be ready.<br/>You just need to start.
-      </p>
-      <form id="submit-form" style="display:flex;flex-direction:column;gap:12px;">
+
+      <div class="apply-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2px; align-items: start;">
+
+        <!-- LEFT: project submission -->
+        <div style="background: var(--card-bg); border: 1px solid var(--card-border); padding: 40px;">
+          <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.16em; color: var(--amber); margin-bottom: 8px;">your project</div>
+          <div style="font-family: 'Alfa Slab One', serif; font-size: 22px; color: var(--white); margin-bottom: 6px;">Submit for review</div>
+          <p style="font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 28px;">Applications aren't officially open yet. But if you've already built something, send it in — we'll review it and have it ready to score when we launch.</p>
+          <form id="submit-form" style="display:flex;flex-direction:column;gap:10px;">
         <input name="project_name" type="text" placeholder="Project name" required
           style="background:#1a1916;border:1px solid #2a2825;color:#f0ede8;font-family:'JetBrains Mono',monospace;font-size:13px;padding:12px 16px;outline:none;width:100%;"
           onfocus="this.style.borderColor='#f5a623'" onblur="this.style.borderColor='#2a2825'" />
@@ -961,12 +969,37 @@
           <input type="file" accept="application/pdf" style="display:none" id="deck-file-input" />
         </div>
         <input name="deck_url" type="hidden" id="deck_url_val" />
-        <button id="submit-btn" type="submit" class="btn-cta" style="font-size:16px;padding:16px 40px;border:none;cursor:pointer;margin-top:8px;">ship it</button>
-        <p id="submit-msg" style="font-family:'JetBrains Mono',monospace;font-size:12px;min-height:18px;text-align:center;"></p>
-      </form>
-      <p style="font-family: 'Inter', sans-serif; font-size: 11px; color: #6b6560; margin-top: 16px; text-align: center;">
-        Must be &lt;18 years old to participate · Open worldwide
-      </p>
+          <button id="submit-btn" type="submit" class="btn-cta" style="font-size:14px;padding:14px 32px;border:none;cursor:pointer;margin-top:4px;">submit for review</button>
+          <p id="submit-msg" style="font-size:12px;min-height:18px;text-align:center;color:var(--muted);"></p>
+        </form>
+        <p style="font-size: 11px; color: #6b6560; margin-top: 12px;">Must be &lt;18 · Open worldwide</p>
+        </div>
+
+        <!-- RIGHT: interest form -->
+        <div style="background: #111009; border: 1px solid #2a3520; padding: 40px;">
+          <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.16em; color: var(--green); margin-bottom: 8px;">not built yet?</div>
+          <div style="font-family: 'Alfa Slab One', serif; font-size: 22px; color: var(--white); margin-bottom: 6px;">I'm interested</div>
+          <p style="font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 28px;">Register your interest and we'll let you know when Bootstrap officially opens.</p>
+          <form id="interest-form" style="display:flex;flex-direction:column;gap:10px;">
+            <input name="int_name" type="text" placeholder="your name" required
+              style="background:#1a1916;border:1px solid #2a2825;color:#f0ede8;font-family:'Inter',sans-serif;font-size:13px;padding:12px 16px;outline:none;width:100%;"
+              onfocus="this.style.borderColor='#00c805'" onblur="this.style.borderColor='#2a2825'" />
+            <input name="int_age" type="number" placeholder="your age" min="10" max="17" required
+              style="background:#1a1916;border:1px solid #2a2825;color:#f0ede8;font-family:'Inter',sans-serif;font-size:13px;padding:12px 16px;outline:none;width:100%;"
+              onfocus="this.style.borderColor='#00c805'" onblur="this.style.borderColor='#2a2825'" />
+            <input name="int_country" type="text" placeholder="where are you from?" required
+              style="background:#1a1916;border:1px solid #2a2825;color:#f0ede8;font-family:'Inter',sans-serif;font-size:13px;padding:12px 16px;outline:none;width:100%;"
+              onfocus="this.style.borderColor='#00c805'" onblur="this.style.borderColor='#2a2825'" />
+            <input name="int_email" type="email" placeholder="email (so we can reach you)"
+              style="background:#1a1916;border:1px solid #2a2825;color:#f0ede8;font-family:'Inter',sans-serif;font-size:13px;padding:12px 16px;outline:none;width:100%;"
+              onfocus="this.style.borderColor='#00c805'" onblur="this.style.borderColor='#2a2825'" />
+            <button type="submit" style="background:var(--green);color:#0f0e0d;font-family:'Inter',sans-serif;font-size:14px;font-weight:700;padding:14px 32px;border:2px solid var(--green);cursor:pointer;letter-spacing:0.04em;transition:background 0.1s,color 0.1s;margin-top:4px;"
+              onmouseover="this.style.background='transparent';this.style.color='var(--green)'" onmouseout="this.style.background='var(--green)';this.style.color='#0f0e0d'">i'm interested</button>
+            <p id="interest-msg" style="font-size:12px;min-height:18px;text-align:center;color:var(--muted);"></p>
+          </form>
+        </div>
+
+      </div><!-- end grid -->
     </div>
   </section>
 
