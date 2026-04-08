@@ -1,6 +1,8 @@
 import os
 import uuid
 import time
+import smtplib
+from email.mime.text import MIMEText
 from collections import defaultdict
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
@@ -16,11 +18,28 @@ CORS(app, resources={r"/api/*": {"origins": os.environ.get("ALLOWED_ORIGIN", "*"
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
 SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
 ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "changeme")
+GMAIL_USER = os.environ.get("GMAIL_USER")
+GMAIL_APP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD")
+NOTIFY_EMAIL = "johnathanmcphilbin2@gmail.com"
 
 if not SUPABASE_URL or not SUPABASE_KEY:
     raise RuntimeError("SUPABASE_URL and SUPABASE_KEY environment variables must be set")
 
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
+
+def send_notification(subject, body):
+    if not GMAIL_USER or not GMAIL_APP_PASSWORD:
+        return
+    try:
+        msg = MIMEText(body)
+        msg["Subject"] = subject
+        msg["From"] = GMAIL_USER
+        msg["To"] = NOTIFY_EMAIL
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
+            smtp.login(GMAIL_USER, GMAIL_APP_PASSWORD)
+            smtp.sendmail(GMAIL_USER, NOTIFY_EMAIL, msg.as_string())
+    except Exception:
+        pass  # never let email errors break the main request
 
 def get_tier(score):
     if score is None:
@@ -132,6 +151,13 @@ def interest():
             "country": data["country"],
             "email": data.get("email"),
         }).execute()
+        send_notification(
+            f"New interest signup: {data['name']}",
+            f"Name: {data['name']}\n"
+            f"Age: {data['age']}\n"
+            f"Country: {data['country']}\n"
+            f"Email: {data.get('email') or 'not provided'}\n"
+        )
         return jsonify({"success": True}), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -182,7 +208,19 @@ def submit():
             "tier": "pending",
             "status": "pending",
         }).execute()
-        return jsonify({"success": True, "id": result.data[0]["id"]}), 201
+        sub = result.data[0]
+        send_notification(
+            f"New submission: {data['project_name']}",
+            f"Project: {data['project_name']}\n"
+            f"Builder: {data['builder_name']}\n"
+            f"Live URL: {data['live_url']}\n"
+            f"GitHub: {data['github_url']}\n"
+            f"Pitch: {data['pitch_url']}\n"
+            f"Deck: {data.get('deck_url') or 'none'}\n"
+            f"ID: {sub['id']}\n\n"
+            f"Review at: https://bootstrap-production-e275.up.railway.app/admin"
+        )
+        return jsonify({"success": True, "id": sub["id"]}), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
