@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resources — Bootstrap</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f0e0d;
+      --green: #00c805;
+      --amber: #f5a623;
+      --white: #f0ede8;
+      --muted: #9b9590;
+      --card-bg: #1a1916;
+      --card-border: #2a2825;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Grain */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.35;
+    }
+
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 80px 48px;
+    }
+
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      margin-bottom: 56px;
+    }
+    .back:hover { color: var(--white); }
+
+    .page-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--amber);
+      letter-spacing: 0.04em;
+      margin-bottom: 16px;
+    }
+
+    .page-title {
+      font-family: 'Alfa Slab One', serif;
+      font-size: clamp(48px, 8vw, 88px);
+      font-weight: 400;
+      line-height: 0.95;
+      margin-bottom: 20px;
+    }
+
+    .page-title span { color: var(--amber); }
+
+    .page-intro {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 560px;
+      margin-bottom: 72px;
+    }
+
+    .category {
+      margin-bottom: 56px;
+    }
+
+    .category-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--muted);
+      text-transform: lowercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #1e1d1b;
+    }
+
+    .resource-card {
+      display: block;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 24px 28px;
+      text-decoration: none;
+      margin-bottom: 2px;
+      transition: border-color 0.15s, background 0.15s;
+      position: relative;
+    }
+
+    .resource-card:hover {
+      border-color: var(--amber);
+      background: #1d1a12;
+    }
+
+    .resource-card:hover .card-arrow { color: var(--amber); }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 6px;
+    }
+
+    .card-title {
+      font-family: 'Alfa Slab One', serif;
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--white);
+      line-height: 1.2;
+    }
+
+    .card-arrow {
+      font-size: 16px;
+      color: var(--muted);
+      flex-shrink: 0;
+      transition: color 0.15s;
+    }
+
+    .card-source {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--amber);
+      margin-bottom: 8px;
+    }
+
+    .card-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .card-tag {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 3px 8px;
+      border: 1px solid var(--green);
+      color: var(--green);
+      margin-top: 12px;
+    }
+
+    footer {
+      padding: 40px 48px;
+      border-top: 1px solid #1e1d1b;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .footer-left {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .footer-left strong {
+      color: var(--amber);
+      display: block;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    @media (max-width: 640px) {
+      .page { padding: 48px 24px; }
+      footer { padding: 32px 24px; flex-direction: column; gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page">
+
+    <a href="/" class="back">← back to bootstrap</a>
+
+    <div class="page-eyebrow">free · no fluff · actually useful</div>
+    <h1 class="page-title">The reading<br/><span>list.</span></h1>
+    <p class="page-intro">
+      Everything here is free. None of it is motivational garbage. These are the actual things worth reading before you build — and while you build.
+    </p>
+
+    <!-- PITCHING -->
+    <div class="category">
+      <div class="category-label">pitching &amp; pitch decks</div>
+
+      <a class="resource-card" href="https://www.ycombinator.com/library/6q-how-to-pitch-your-startup" target="_blank" rel="noopener">
+        <div class="card-source">Y Combinator</div>
+        <div class="card-top">
+          <div class="card-title">How to Pitch Your Startup</div>
+          <div class="card-arrow">↗</div>
+        </div>
+        <div class="card-desc">The actual YC advice. Short, direct, no padding. If you can't explain your startup in two sentences after reading this, read it again.</div>
+        <span class="card-tag">essential</span>
+      </a>
+
+      <a class="resource-card" href="https://slidebean.com/blog/startups-pitch-deck-examples" target="_blank" rel="noopener">
+        <div class="card-source">Slidebean</div>
+        <div class="card-top">
+          <div class="card-title">Real Pitch Decks — Airbnb, Uber, and more</div>
+          <div class="card-arrow">↗</div>
+        </div>
+        <div class="card-desc">Actual decks from companies that raised. Broken down slide by slide. Worth seeing what a real early deck looks like vs. what people imagine it should look like.</div>
+      </a>
+
+      <a class="resource-card" href="https://www.ycombinator.com/apply" target="_blank" rel="noopener">
+        <div class="card-source">Y Combinator</div>
+        <div class="card-top">
+          <div class="card-title">The YC Application</div>
+          <div class="card-arrow">↗</div>
+        </div>
+        <div class="card-desc">Just reading the questions teaches you how to think about your product. What does it do? Who is it for? What's the market? Why are you the one to build it?</div>
+      </a>
+    </div>
+
+    <!-- REVENUE -->
+    <div class="category">
+      <div class="category-label">revenue models &amp; pricing</div>
+
+      <a class="resource-card" href="https://www.lennysnewsletter.com/p/saas-pricing-strategy" target="_blank" rel="noopener">
+        <div class="card-source">Lenny's Newsletter</div>
+        <div class="card-top">
+          <div class="card-title">SaaS Pricing Strategy</div>
+          <div class="card-arrow">↗</div>
+        </div>
+        <div class="card-desc">How SaaS pricing actually works — not theory, actual breakdowns of what works and why. Useful if you're building anything with a subscription or credits model.</div>
+      </a>
+
+      <a class="resource-card" href="https://www.kalzumeus.com/2012/08/13/doubling-saas-revenue/" target="_blank" rel="noopener">
+        <div class="card-source">Patrick McKenzie</div>
+        <div class="card-top">
+          <div class="card-title">Selling to Businesses</div>
+          <div class="card-arrow">↗</div>
+        </div>
+        <div class="card-desc">Dense but legendary. Teaches you how money actually flows in software businesses. How businesses buy, what they value, and why charging more is often easier than charging less.</div>
+        <span class="card-tag">classic</span>
+      </a>
+    </div>
+
+    <!-- BUILDING -->
+    <div class="category">
+      <div class="category-label">building &amp; shipping</div>
+
+      <a class="resource-card" href="http://paulgraham.com/ds.html" target="_blank" rel="noopener">
+        <div class="card-source">Paul Graham</div>
+        <div class="card-top">
+          <div class="card-title">Do Things That Don't Scale</div>
+          <div class="card-arrow">↗</div>
+        </div>
+        <div class="card-desc">The most important essay for early stage. Do the manual, unscalable thing first. Get your first users yourself. Bootstrap is literally built around this idea.</div>
+        <span class="card-tag">essential</span>
+      </a>
+
+      <a class="resource-card" href="https://www.indiehackers.com" target="_blank" rel="noopener">
+        <div class="card-source">Indie Hackers</div>
+        <div class="card-top">
+          <div class="card-title">Real Founders, Real Revenue Numbers</div>
+          <div class="card-arrow">↗</div>
+        </div>
+        <div class="card-desc">Interviews with founders who built real products, often solo, often with no funding. Revenue numbers are public. Read the interviews — the patterns repeat.</div>
+      </a>
+    </div>
+
+    <!-- USERS -->
+    <div class="category">
+      <div class="category-label">finding users</div>
+
+      <a class="resource-card" href="https://www.ycombinator.com/library/6A-how-to-get-your-first-customers" target="_blank" rel="noopener">
+        <div class="card-source">Y Combinator</div>
+        <div class="card-top">
+          <div class="card-title">How to Get Your First Customers</div>
+          <div class="card-arrow">↗</div>
+        </div>
+        <div class="card-desc">Exactly what Bootstrap requires — 5 real users. This is how you actually get them. Not ads, not SEO, not waiting. Read this before you submit.</div>
+        <span class="card-tag">read before submitting</span>
+      </a>
+    </div>
+
+    <!-- TOOLS -->
+    <div class="category">
+      <div class="category-label">tools we recommend</div>
+
+      <a class="resource-card" href="https://hackatime.hackclub.com" target="_blank" rel="noopener">
+        <div class="card-source">Hack Club</div>
+        <div class="card-top">
+          <div class="card-title">Hackatime</div>
+          <div class="card-arrow">↗</div>
+        </div>
+        <div class="card-desc">Automatic coding time tracking. Required for Bootstrap scoring. Install it, forget about it, let it run in the background while you build.</div>
+      </a>
+
+      <a class="resource-card" href="https://porkbun.com" target="_blank" rel="noopener">
+        <div class="card-source">Porkbun</div>
+        <div class="card-top">
+          <div class="card-title">Porkbun — Cheap Domains</div>
+          <div class="card-arrow">↗</div>
+        </div>
+        <div class="card-desc">Cheapest registrar around. .com domains for ~$10. Your project needs a live URL — get a real domain, not a subdomain of someone else's thing.</div>
+      </a>
+
+      <a class="resource-card" href="https://railway.app" target="_blank" rel="noopener">
+        <div class="card-source">Railway</div>
+        <div class="card-top">
+          <div class="card-title">Railway — Deploy Anything</div>
+          <div class="card-arrow">↗</div>
+        </div>
+        <div class="card-desc">Easiest way to deploy a backend. Push to GitHub, it deploys. No config, no YAML hell. Bootstrap itself runs on Railway.</div>
+      </a>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-left">
+      <strong>Bootstrap</strong>
+      A Hack Club You Ship, We Ship program.
+    </div>
+    <div style="display:flex;gap:8px;">
+      <a href="https://hackclub.com" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:#ec3750;color:#fff;font-family:'Inter',sans-serif;font-size:11px;font-weight:700;text-decoration:none;padding:6px 12px;letter-spacing:0.04em;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16.925 5.765c-1.168-1.174-2.72-1.765-4.34-1.765h-.17C10.796 4 9.243 4.59 8.075 5.765 6.902 6.944 6.257 8.523 6.257 10.197c0 1.673.645 3.252 1.818 4.43l3.54 3.558a.554.554 0 0 0 .786 0l3.54-3.557c1.172-1.179 1.818-2.758 1.818-4.431 0-1.674-.646-3.253-1.834-4.432zm-4.51 6.432a2.054 2.054 0 0 1-2.051-2.055 2.054 2.054 0 0 1 2.051-2.055 2.054 2.054 0 0 1 2.051 2.055 2.054 2.054 0 0 1-2.051 2.055z"/></svg>
+        Hack Club
+      </a>
+      <a href="https://github.com/johnathanmcphilbin/Bootstrap" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:#1a1916;border:1px solid #3a3733;color:#f0ede8;font-family:'Inter',sans-serif;font-size:11px;font-weight:700;text-decoration:none;padding:6px 12px;letter-spacing:0.04em;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+        GitHub
+      </a>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -49,6 +49,10 @@ def index():
 def admin():
     return send_from_directory("static", "admin.html")
 
+@app.route("/resources")
+def resources():
+    return send_from_directory("static", "resources.html")
+
 ALLOWED_BUCKETS = {"videos", "decks"}
 ALLOWED_VIDEO_TYPES = {"video/mp4", "video/quicktime", "video/webm"}
 ALLOWED_DECK_TYPES = {"application/pdf"}

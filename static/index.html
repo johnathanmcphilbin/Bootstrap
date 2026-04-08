@@ -838,10 +838,11 @@
     <div class="prizes-grid">
 
       <div class="prize-tier gold">
-        <div class="prize-stage">Tier 1</div>
+        <div class="prize-stage">Tier 1 · $75 budget</div>
         <div class="prize-tier-name">Funded</div>
         <div class="prize-range"><strong>85–100 pts</strong> — you basically built a real company</div>
         <ul class="prize-items">
+          <li>$25 OpenAI credits</li>
           <li>$25 Stripe credit</li>
           <li>Porkbun domain voucher (1 year)</li>
           <li>Railway hosting credit</li>
@@ -849,32 +850,36 @@
       </div>
 
       <div class="prize-tier silver">
-        <div class="prize-stage">Tier 2</div>
+        <div class="prize-stage">Tier 2 · $60 budget</div>
         <div class="prize-tier-name">Series A</div>
         <div class="prize-range"><strong>70–84 pts</strong> — solid ship, real traction</div>
         <ul class="prize-items">
-          <li>$25 Vercel credit</li>
+          <li>$25 OpenAI credits</li>
+          <li>$25 Stripe credit</li>
           <li>Porkbun domain voucher (1 year)</li>
+          <li>Vercel hosting credit</li>
         </ul>
       </div>
 
       <div class="prize-tier bronze">
-        <div class="prize-stage">Tier 3</div>
+        <div class="prize-stage">Tier 3 · $50 budget</div>
         <div class="prize-tier-name">Pre-seed</div>
         <div class="prize-range"><strong>50–69 pts</strong> — shipped something, proved it works</div>
         <ul class="prize-items">
+          <li>$25 OpenAI credits</li>
+          <li>$15 Stripe credit</li>
           <li>Porkbun domain voucher (1 year)</li>
         </ul>
       </div>
 
       <div class="prize-tier base">
-        <div class="prize-stage">Tier 4</div>
+        <div class="prize-stage">Tier 4 · $25 budget</div>
         <div class="prize-tier-name" style="color: var(--green);">✓ Bootstrapped</div>
         <div class="prize-range"><strong>Shipped anything</strong> — you showed up. that's not nothing.</div>
         <ul class="prize-items">
-          <li>$25 Stripe credit</li>
+          <li>$15 OpenAI credits</li>
+          <li>$10 Stripe credit</li>
           <li>Hack Club sticker pack</li>
-          <li>Listed in the Bootstrap Hall of Fame</li>
         </ul>
       </div>
 
@@ -894,6 +899,23 @@
       <div id="leaderboard-body">
         <p style="color:#6b6560;font-family:'JetBrains Mono',monospace;font-size:13px;padding:24px 0;">Loading...</p>
       </div>
+    </div>
+  </section>
+
+  <!-- ── RESOURCES CTA ── -->
+  <section class="section" style="padding: 64px 48px;">
+    <div style="background:var(--card-bg);border:1px solid var(--card-border);padding:48px;display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap;position:relative;overflow:hidden;">
+      <!-- background number -->
+      <div style="position:absolute;right:40px;top:50%;transform:translateY(-50%);font-family:'Alfa Slab One',serif;font-size:180px;color:#1e1d1b;line-height:1;pointer-events:none;user-select:none;">12</div>
+      <div style="position:relative;z-index:1;max-width:480px;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.16em;color:var(--amber);margin-bottom:12px;">free · no fluff</div>
+        <div style="font-family:'Alfa Slab One',serif;font-size:clamp(28px,4vw,44px);line-height:1.05;color:var(--white);margin-bottom:16px;">12 things worth<br/>reading <span style="color:var(--amber);">before you build.</span></div>
+        <p style="font-size:13px;color:var(--muted);line-height:1.7;">YC essays. Real pitch decks. How money flows in software. How to get your first users. None of it is motivational garbage.</p>
+      </div>
+      <a href="/resources" style="position:relative;z-index:1;display:inline-flex;align-items:center;gap:12px;background:var(--amber);color:#0f0e0d;font-family:'Inter',sans-serif;font-size:14px;font-weight:700;text-decoration:none;padding:16px 32px;letter-spacing:0.04em;border:2px solid var(--amber);transition:background 0.1s,color 0.1s;flex-shrink:0;" onmouseover="this.style.background='transparent';this.style.color='var(--amber)'" onmouseout="this.style.background='var(--amber)';this.style.color='#0f0e0d'">
+        the reading list
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
     </div>
   </section>
 
@@ -971,7 +993,8 @@
     <div class="footer-left">
       <strong>Bootstrap</strong>
       A Hack Club You Ship, We Ship program.<br/>
-      Built for teenagers who build real things.
+      Built for teenagers who build real things.<br/>
+      <a href="/resources" style="color:var(--amber);font-size:11px;font-weight:600;text-decoration:none;margin-top:8px;display:inline-block;">reading list →</a>
     </div>
     <div style="font-family: 'Inter', sans-serif; font-size: 11px; color: #6b6560; text-align: center; line-height: 1.8;">
       estimated 6–10 hrs per project · ~$5/hr prize budget<br/>
@@ -981,8 +1004,16 @@
     <div class="footer-right">
       <div style="margin-bottom: 8px;"><span class="status-dot"></span>accepting submissions</div>
       <div>© 2026 Hack Club</div>
-      <div style="margin-top: 8px; font-size: 10px;">hackclub.com</div>
-      <div style="margin-top: 4px; font-size: 10px;">github.com/johnathanmcphilbin/Bootstrap</div>
+      <div style="margin-top: 12px; display: flex; flex-direction: column; gap: 6px; align-items: flex-end;">
+        <a href="https://hackclub.com" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:#ec3750;color:#fff;font-family:'Inter',sans-serif;font-size:11px;font-weight:700;text-decoration:none;padding:6px 12px;letter-spacing:0.04em;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16.925 5.765c-1.168-1.174-2.72-1.765-4.34-1.765h-.17C10.796 4 9.243 4.59 8.075 5.765 6.902 6.944 6.257 8.523 6.257 10.197c0 1.673.645 3.252 1.818 4.43l3.54 3.558a.554.554 0 0 0 .786 0l3.54-3.557c1.172-1.179 1.818-2.758 1.818-4.431 0-1.674-.646-3.253-1.834-4.432zm-4.51 6.432a2.054 2.054 0 0 1-2.051-2.055 2.054 2.054 0 0 1 2.051-2.055 2.054 2.054 0 0 1 2.051 2.055 2.054 2.054 0 0 1-2.051 2.055z"/></svg>
+          Hack Club
+        </a>
+        <a href="https://github.com/johnathanmcphilbin/Bootstrap" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:#1a1916;border:1px solid #3a3733;color:#f0ede8;font-family:'Inter',sans-serif;font-size:11px;font-weight:700;text-decoration:none;padding:6px 12px;letter-spacing:0.04em;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+          GitHub
+        </a>
+      </div>
     </div>
   </footer>
 
