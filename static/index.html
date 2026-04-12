@@ -187,9 +187,11 @@
       display: flex;
       flex-wrap: wrap;
       gap: 16px;
-      margin-top: 64px;
+      margin-top: 40px;
+      margin-bottom: 40px;
       position: relative;
       z-index: 1;
+      justify-content: center;
     }
 
     .metric-card {
@@ -732,18 +734,14 @@
       </svg>
     </div>
 
-    <img src="/static/BOOTSTRAP.png" alt="Bootstrap" style="position:absolute;bottom:40px;right:48px;width:220px;height:220px;object-fit:contain;filter:invert(1);opacity:0.35;pointer-events:none;" />
     <div class="hero-eyebrow">hack club · ysws</div>
 
-    <h1 class="hero-title">
-      Boot<span class="highlight">strap.</span>
-    </h1>
-
-    <p class="hero-sub">
-      <strong>build something real.</strong> get 5 real users. ship it.
-    </p>
-
-    <a href="#apply" class="btn-cta">ship it</a>
+    <div style="display:flex;align-items:center;justify-content:center;gap:32px;position:relative;z-index:1;">
+      <img src="/static/BOOTSTRAP.png" alt="Bootstrap" style="width:180px;height:180px;object-fit:contain;filter:invert(1);opacity:0.35;pointer-events:none;flex-shrink:0;" />
+      <h1 class="hero-title" style="text-align:left;">
+        Boot<span class="highlight">strap.</span>
+      </h1>
+    </div>
 
     <!-- Metric cards -->
     <div class="metrics" id="metrics">
@@ -764,6 +762,12 @@
         <div class="metric-value green" id="m-raised">$0</div>
       </div>
     </div>
+
+    <p class="hero-sub">
+      <strong>build something real.</strong> get 5 real users. ship it.
+    </p>
+
+    <a href="#apply" class="btn-cta">ship it</a>
   </section>
 
   <!-- ── HOW IT WORKS ── -->
